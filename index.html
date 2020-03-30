@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>List of Pets</h1>
+    <ul id = 'listOfPets'></ul>
+
+    <table style="width:100%" id = 'myPets'>
+        <tr id = 'tableTitles'>
+          <th>pet_id</th>
+          <th>name</th>
+          <th>careInstructions</th>
+          <th>dietInstructions</th>
+          <th>age</th>
+          <th>breed</th>
+          <th>weight</th>
+          <th>user_id</th>
+        </tr>
+      </table>
+      <br>
+      <form>
+          <div id = "submitForm">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input  id = "addPet" type="submit">
+    </div>
+      </form>
+      <br>
+      <table style="width:100%" id = 'myUpcomingBookings'>
+        <h1>Upcoming Bookings</h1>
+        <tr id = 'tableTitles'>
+          <th>BookingID</th>
+          <th>Booked Date</th>
+          <th>Price Paid</th>
+          <th>Duration</th>
+          <th>Service Type</th>
+          <th>Pet Sitter</th>
+      </table>
+      <br>
+      <form id = 'PromoCodeForm'>
+        <div id = "findPromoCode">
+            <h1>Find Promo Code</h1>
+      <input type="text">
+      <input  id = "findPromo" type="submit">
+  </div>
+    </form>
+
+<select id="list" name="selectList" form="PromoCodeForm">
+  <option value="value">Value At Least</option>
+  <option value="expires">Expiration Before</option>
+</select>
+
+<table style="width:100%" id = 'retrievedPromoCode'>
+    <tr id = 'tableTitles'>
+      <th>PromoCode</th>
+      <th>Value</th>
+      <th>Expires</th>
+  </table>
+
+
+
+
+    <script >
+        const addPetButton = document.getElementById("addPet")
+        addPetButton.addEventListener("click", async e => {
+            let parent = document.getElementById("submitForm").childNodes;
+            // Add funct if PK is not provided
+            let array = new Array();
+            for (let child of parent) {
+                if (child.tagName === "INPUT" && child.type === "text") {
+                        array.push(child.value);
+                }
+            }
+
+            let temp = {"pet_id": parseInt(array[0], 10), "name": array[1], "careInstructions": array[2], "dietInstructions": array[3], "age": parseInt(array[4]), 
+            "breed": array[5], "weight": parseFloat(array[6]), "user_id": parseInt(array[7])};
+
+            const jsonRequest = {}
+                jsonRequest.pet = temp;
+                const result = await fetch('http://localhost:8080/pet', {method: "POST",
+           headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
+        const success = await result.json();
+        })
+
+        const filterButton = document.getElementById("findPromo")
+        filterButton.addEventListener("click", async e => {
+            let parent = document.getElementById("findPromoCode").childNodes;
+            let array = new Array();
+            for (let child of parent) {
+                if (child.tagName === "INPUT" && child.type === "text") {
+                        array.push(child.value);
+                }
+            }
+
+            let p =document.getElementById("list");
+            let a2 = new Array();
+
+            for (let child of p) {
+                if (child.selected) {
+                        a2.push(child.value);
+                }
+            }
+
+            let temp = [a2[0], array[0]];
+
+            const jsonRequest = {}
+                jsonRequest.value = temp;
+                const result = await fetch('http://localhost:8080/promoCode', {method: "PUT",
+           headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
+        const success = await result.json();
+        console.log(result.json());
+        })
+
+
+
+
+
+
+        readListOfPets();
+        readBookings();
+       async function readListOfPets() {
+           try {
+           const petList = document.getElementById("myPets").getElementsByTagName("tbody")[0];
+           const result  = await fetch("http://localhost:8080/pet", {method: "GET"});
+           const pets = await result.json();
+           pets.forEach(p => {
+               const tr = document.createElement("tr");
+
+               const id = document.createElement("td");
+               id.textContent = p['pet_id'];
+               id.contentEditable = true;
+               tr.appendChild(id);
+
+               const name = document.createElement("td");
+               name.textContent = p.name;
+               name.contentEditable = true;
+               tr.appendChild(name);
+
+               const careInstructions = document.createElement("td");
+               careInstructions.textContent = p.careInstructions;
+               careInstructions.contentEditable = true;
+               tr.appendChild(careInstructions);
+
+               const dietInstructions = document.createElement("td");
+               dietInstructions.textContent = p.dietInstructions;
+               dietInstructions.contentEditable = true;
+               tr.appendChild(dietInstructions);
+
+               const age = document.createElement("td");
+               age.textContent = p.age;
+               age.contentEditable = true;
+               tr.appendChild(age);
+
+               const breed = document.createElement("td");
+               breed.textContent = p.breed;
+               breed.contentEditable = true;
+               tr.appendChild(breed);
+
+               const weight = document.createElement("td");
+               weight.textContent = p.weight;
+               weight.contentEditable = true;
+               tr.appendChild(weight);
+
+               const userID = document.createElement("td");
+               userID.textContent = p['user_id'];
+               userID.contentEditable = true;
+               tr.appendChild(userID);
+
+               const deleteButton = document.createElement("td");
+               const button = document.createElement("input");
+               button.type = "button";
+               button.value = "Delete row";
+               button.onclick = function () {delRow(this); };
+               deleteButton.appendChild(button);
+
+               tr.appendChild(deleteButton);
+
+               
+               const updateButton = document.createElement("td");
+               button1 = document.createElement("input");
+               button1.type = "button";
+               button1.value = "Update row";
+               button1.onclick = function () {updateRow(this); };
+               updateButton.appendChild(button1);
+
+               tr.appendChild(updateButton);
+
+
+               tr.id = p['pet_id'];
+
+
+               petList.appendChild(tr);
+           })
+           } 
+           catch (e) {
+               console.log("List could not load properly");
+           }
+       }
+
+       async function readBookings() {
+           try {
+           const bookingsList = document.getElementById("myUpcomingBookings").getElementsByTagName("tbody")[0];
+           const result  = await fetch("http://localhost:8080/booking", {method: "GET"});
+           const bookings = await result.json();
+           bookings.forEach(b => {
+               const tr = document.createElement("tr");
+
+               const id = document.createElement("td");
+               id.textContent = b['booking_id'];
+               tr.appendChild(id);
+
+               const dateBooked = document.createElement("td");
+               dateBooked.textContent = b.datebooked;
+               tr.appendChild(dateBooked);
+
+               const ppn = document.createElement("td");
+               ppn.textContent = b.pricepernight;
+               tr.appendChild(ppn);
+
+               const duration = document.createElement("td");
+               duration.textContent = b.duration;
+               tr.appendChild(duration);
+
+               const user_id = document.createElement("td");
+               user_id.textContent = b['user_id'];
+               tr.appendChild(user_id);
+
+               tr.id = b['booking_id'];
+
+               bookingsList.appendChild(tr);
+           })
+           } 
+           catch (e) {
+               console.log("List could not load properly");
+           }
+       }
+
+       async function delRow(x){
+        const jsonRequest = {}
+                jsonRequest.id = x.parentElement.parentElement.id;
+                const result = await fetch('http://localhost:8080/pet', {method: "DELETE",
+           headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
+        const success = await result.json();
+       }
+
+        async function updateRow(x){
+        const jsonRequest = {}
+        let parent =  x.parentElement.parentElement.childNodes;
+
+        let array = new Array();
+
+        for (let i = 0; i < 8; i++) {
+            if (parent[i].tagName === "TD") {
+                if (parent[i].childNodes[0].nodeName = "#text") {
+                    array.push(parent[i].childNodes[0].wholeText);
+                }
+            }
+        }
+                jsonRequest.id = array;
+                const result = await fetch('http://localhost:8080/pet', {method: "PUT",
+           headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
+        const success = await result.json();
+    }
+    </script>
+    
+
+
+    
+</body>
+</html>
