@@ -8,10 +8,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/home', function(req, res, next) {
-  console.log("home");
-  store.getPetsOfPetOwner(1).then((data) => {
-    console.log(data);
-    res.render('homepageowner', { title: "hello" });
+  store.getPetsOfPetOwner(1).then(({rows}) => {
+    res.render('homepageowner', { pets: rows });
   })
 });
 
