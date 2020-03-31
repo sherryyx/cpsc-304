@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/sherryyx/cpsc-304/issues"
   },
-  "homepage": "https://github.com/sherryyx/cpsc-304#readme"
+  "homepage": "https://github.com/sherryyx/cpsc-304#readme",
+  "dependencies": {
+    "pg": "^8.0.0",
+    "knex": "0.20.13",
+    "faker": "4.1.0"
+  }
 }
