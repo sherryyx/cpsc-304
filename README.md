@@ -1,3 +1,9 @@
+## Starting the server
+```
+> cd petbnb
+> node app.js
+```
+
 ## Setting up the database
 
 Enter the postgres console:
