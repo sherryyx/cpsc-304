@@ -1,10 +1,10 @@
-## Starting the server
+# Starting the server
 ```
 > cd petbnb
 > node app.js
 ```
 
-## Setting up the database
+# Setting up the database
 
 Enter the postgres console:
 ```
@@ -17,12 +17,12 @@ CREATE ROLE root WITH LOGIN PASSWORD 'password';
 create database petbnb;
 ```
 
-## Installing dependencies
+# Installing dependencies
 ```
 npm install
 ```
 
-## Database migrations
+# Database migrations
 We're using [knex](http://knexjs.org/) to deal with database migrations
 
 ### General tutorial
@@ -59,7 +59,7 @@ To run the migration you just created, simply run:
 node_modules/.bin/knex migrate:latest
 ```
 
-## Seeding the database
+# Seeding the database
 Database seeds are useful to initialize the database with initial data, or reset the database with the initial data after making changes to the database.
 We're again using [knex](http://knexjs.org/) to deal with database seeds.
 
