@@ -21,6 +21,12 @@ router.get('/signup', function(req, res, next) {
   res.render('signup', {});
 });
 
+router.post('/signup', function(req, res, next) {
+  console.log("CREATING USER!!!");
+  console.log(req.body);
+  res.redirect('/home');
+});
+
 
 
 module.exports = router;
