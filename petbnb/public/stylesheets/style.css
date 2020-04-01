@@ -91,6 +91,9 @@ a {
 
 .signup-container {
   background-image: url("../assets/signup-bg.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
   padding-top: 100px;
 }
