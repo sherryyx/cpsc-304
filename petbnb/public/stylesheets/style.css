@@ -1,8 +1,45 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  font-family:'Inter', sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: #2d2d2d;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 500;
+  color: #6c6c6c;
+  margin-top: 8px;
 }
 
 a {
   color: #00B7FF;
+}
+
+
+/** Landing Page **/
+.landing-container {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.landing-image img {
+  height: 100vh;
+}
+
+.landing-text {
+  padding-left: 88px;
+  padding-top: 24vh;
+}
+
+.button-group {
+  padding: 32px 0px 32px 0px;
 }
