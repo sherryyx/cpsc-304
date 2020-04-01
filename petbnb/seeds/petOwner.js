@@ -1,9 +1,8 @@
 var faker = require('faker');
 
 const createPet = (knex, pet_id, owner_id) => {
-  return knex.raw(`INSERT INTO pet
+  return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
   VALUES(
-    ${pet_id},
     '${faker.name.firstName()}',
     'Play fetch twice an hour',
     'Feed chimken twice a day please',
@@ -15,19 +14,21 @@ const createPet = (knex, pet_id, owner_id) => {
 }
 
 const createPetOwner = (knex, id) => {
-  return knex.raw(`INSERT INTO petOwner
+  return knex.raw(`INSERT INTO petOwner (phonenumber, name, housenumber, street, postalcode)
   VALUES (
-    ${id},
     '${faker.phone.phoneNumber()}',
     '${faker.name.findName()}',
     ${faker.random.number({min: 100, max: 9999})},
     '${faker.address.streetName()}',
     '${faker.address.zipCode()}'
-  );`).then(() => {
+  ) returning user_id;`).then(({rows}) => {
     let records = [];
 
+    const owner_id = rows[0].user_id;
+    console.log(owner_id);
+
     for (let pet_id = 2*id; pet_id <= 2*id+1; pet_id++) {
-      records.push(createPet(knex, pet_id, id));
+      records.push(createPet(knex, pet_id, owner_id));
     }
 
     return Promise.all(records);

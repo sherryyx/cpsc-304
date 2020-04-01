@@ -5,6 +5,18 @@ const getPetsOfPetOwner = (petowner_id) => {
     WHERE p.user_id = ${petowner_id};`);
 }
 
+const createPetOwner = ({full_name, email_address, phone_number, house_number, street_name, postal_code, user_type}) => {
+    return knex.raw(`INSERT INTO petOwner (phonenumber, name, housenumber, street, postalcode)
+    VALUES (
+      '${phone_number}',
+      '${full_name}',
+      ${house_number},
+      '${street_name}',
+      '${postal_code}'
+    ) returning *;`);
+}
+
 module.exports = {
-    getPetsOfPetOwner
+    getPetsOfPetOwner,
+    createPetOwner
 };

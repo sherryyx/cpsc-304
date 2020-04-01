@@ -1,51 +1,51 @@
 <%- include('header'); -%>
 
 <div class="signup-container">
-    <div class="form-container">
+    <form action="/signup" method="post" class="form-container">
         <h2>Sign up 👋</h2>
         <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
             <div class="mdc-text-field__ripple"></div>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="full_name" name="full_name">
             <span class="mdc-floating-label" id="my-label-id">Full Name</span>
             <div class="mdc-line-ripple"></div>
         </label>
         <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
             <div class="mdc-text-field__ripple"></div>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="email_address" name="email_address">
             <span class="mdc-floating-label" id="my-label-id">Email address</span>
             <div class="mdc-line-ripple"></div>
         </label>
         <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
             <div class="mdc-text-field__ripple"></div>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="phone_number" name="phone_number">
             <span class="mdc-floating-label" id="my-label-id">Phone number</span>
             <div class="mdc-line-ripple"></div>
         </label>
         <h3>Address</h3>
         <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
             <div class="mdc-text-field__ripple"></div>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="house_number" name="house_number">
             <span class="mdc-floating-label" id="my-label-id">House number</span>
             <div class="mdc-line-ripple"></div>
         </label>
         <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
             <div class="mdc-text-field__ripple"></div>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="street_name" name="street_name">
             <span class="mdc-floating-label" id="my-label-id">Street name</span>
             <div class="mdc-line-ripple"></div>
         </label>
         <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
             <div class="mdc-text-field__ripple"></div>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="postal_code" name="postal_code">
             <span class="mdc-floating-label" id="my-label-id">Postal code</span>
             <div class="mdc-line-ripple"></div>
         </label>
 
-        <h3>Tell us more about yourself!</h3>
+        <h3>Tell us more about yourself</h3>
         <div class="mdc-form-field" data-mdc-auto-init="MDCFormField">
             <div class="radio-group">
                 <div class="mdc-radio">
-                    <input class="mdc-radio__native-control" type="radio" id="radio-1" name="radios" checked>
+                    <input class="mdc-radio__native-control" type="radio" id="radio-option-1" value="petowner" name="user_type" checked>
                     <div class="mdc-radio__background">
                     <div class="mdc-radio__outer-circle"></div>
                     <div class="mdc-radio__inner-circle"></div>
@@ -56,12 +56,12 @@
             </div>
             <div class="radio-group">
                 <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type="radio" id="radio-1" name="radios" checked>
-                        <div class="mdc-radio__background">
-                        <div class="mdc-radio__outer-circle"></div>
-                        <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
+                    <input class="mdc-radio__native-control" type="radio" id="radio-option-2" value="petsitter" name="user_type">
+                    <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
                 </div>
                 <label for="radio-2">I am a pet sitter</label>
             </div>
@@ -71,6 +71,6 @@
             <div class="mdc-button__ripple"></div>
             <span class="mdc-button__label">Continue</span>
         </button>
-    </div>
+    </form>
 </div>
 <%- include('footer'); -%>
