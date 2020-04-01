@@ -21,10 +21,10 @@ const createPetOwner = (knex, id) => {
     ${faker.random.number({min: 100, max: 9999})},
     '${faker.address.streetName()}',
     '${faker.address.zipCode()}'
-  ) returning user_id;`).then((data) => {
+  ) returning user_id;`).then(({rows}) => {
     let records = [];
 
-    const owner_id = data.rows[0].user_id;
+    const owner_id = rows[0].user_id;
     console.log(owner_id);
 
     for (let pet_id = 2*id; pet_id <= 2*id+1; pet_id++) {
