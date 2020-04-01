@@ -30,13 +30,10 @@ router.post('/signup', function(req, res, next) {
   });
 });
 
-<<<<<<< HEAD
-=======
 router.get('/searchList', function(req, res, next) {
   res.render('searchList', {});
 });
 
 
 
->>>>>>> 82f17dc8371bdb18f28a353aceba71d3c312aeac
 module.exports = router;
