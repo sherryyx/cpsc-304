@@ -30,6 +30,10 @@ router.post('/signup', function(req, res, next) {
   });
 });
 
+router.get('/searchList', function(req, res, next) {
+  res.render('searchList', {});
+});
+
 
 
 module.exports = router;
