@@ -1,0 +1,19 @@
+<%- include('header'); -%>
+
+<div class="login-container">
+    <form action="/login" method="post" class="form-container">
+        <h2>Log in👋</h2>
+        <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+            <div class="mdc-text-field__ripple"></div>
+            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="user_id" name="user_id">
+            <span class="mdc-floating-label" id="my-label-id">Username</span>
+            <div class="mdc-line-ripple"></div>
+        </label> 
+
+        <button class="mdc-button mdc-button--unelevated">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">Log in</span>
+        </button>
+    </form>
+</div>
+<%- include('footer'); -%>

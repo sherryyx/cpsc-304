@@ -6,7 +6,7 @@ let current_user;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('landing', {});
 });
 
 router.get('/home', function(req, res, next) {
@@ -15,12 +15,12 @@ router.get('/home', function(req, res, next) {
   });
 });
 
-router.get('/landing', function(req, res, next) {
-  res.render('landing', {});
-});
-
 router.get('/signup', function(req, res, next) {
   res.render('signup', {});
+});
+
+router.get('/login', function(req, res, next) {
+  res.render('login', {});
 });
 
 router.post('/signup', function(req, res, next) {
@@ -28,6 +28,13 @@ router.post('/signup', function(req, res, next) {
     current_user = rows[0];
     res.redirect('/home');
   });
+});
+
+router.post('/login', function(req, res, next) {
+  store.getPetOwner(req.body).then(({rows}) => {
+    current_user = rows[0];
+    res.redirect('/home');
+  })
 });
 
 router.get('/searchList', function(req, res, next) {

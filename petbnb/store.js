@@ -16,7 +16,13 @@ const createPetOwner = ({full_name, email_address, phone_number, house_number, s
     ) returning *;`);
 }
 
+const getPetOwner = ({user_id}) => {
+    return knex.raw(`SELECT * FROM petOwner
+    where user_id = ${user_id};`);
+}
+
 module.exports = {
     getPetsOfPetOwner,
-    createPetOwner
+    createPetOwner,
+    getPetOwner
 };
