@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const store = require('../store')
+const store = require('../store');
+
+let current_user;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -8,9 +10,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/home', function(req, res, next) {
-  store.getPetsOfPetOwner(1).then(({rows}) => {
-    res.render('homepageowner', { pets: rows });
-  })
+  store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+    res.render('homepageowner', { pets: rows, current_user: current_user });
+  });
 });
 
 router.get('/landing', function(req, res, next) {
@@ -22,9 +24,10 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-  console.log("CREATING USER!!!");
-  console.log(req.body);
-  res.redirect('/home');
+  store.createPetOwner(req.body).then(({rows}) => {
+    current_user = rows[0];
+    res.redirect('/home');
+  });
 });
 
 

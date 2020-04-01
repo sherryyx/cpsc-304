@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
   return knex.raw(`CREATE TABLE petOwner (
-	user_id integer,
+	user_id serial,
 	phoneNumber text,
 	name text,
 	houseNumber integer,
