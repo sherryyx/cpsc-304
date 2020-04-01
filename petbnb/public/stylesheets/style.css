@@ -15,8 +15,15 @@ h1 {
 h2 {
   font-size: 28px;
   font-weight: 500;
-  color: #6c6c6c;
+  color: #464646;
   margin-top: 8px;
+}
+
+h3 {
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #8c8c8c;
+  font-weight: 700;
 }
 
 a {
@@ -42,4 +49,52 @@ a {
 
 .button-group {
   padding: 32px 0px 32px 0px;
+}
+
+/** Sign up page **/
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 28px;
+  -webkit-box-shadow: 9px 10px 7px -6px rgb(0, 0, 0, 0.25);
+  -moz-box-shadow: 9px 10px 7px -6px rgb(0, 0, 0, 0.25);
+  box-shadow: 9px 10px 7px -6px rgb(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(218, 218, 218);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: center;
+}
+
+.mdc-text-field {
+  margin-bottom: 16px;
+}
+
+.mdc-form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mdc-form-field label{
+  font-family:'Inter', sans-serif;
+  letter-spacing: 0px;
+  margin-top: 7px;
+}
+
+.signup-container {
+  background-image: url("../assets/signup-bg.jpeg");
+  height: 100vh;
+  padding-top: 100px;
+}
+
+.signup-container .mdc-button{
+  margin-top: 24px;
 }

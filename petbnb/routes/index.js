@@ -17,5 +17,10 @@ router.get('/landing', function(req, res, next) {
   res.render('landing', {});
 });
 
+router.get('/signup', function(req, res, next) {
+  res.render('signup', {});
+});
+
+
 
 module.exports = router;
