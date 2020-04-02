@@ -120,10 +120,11 @@ a {
 }
 
 /* Home page */
-.home-container {
+.container {
   padding: 40px;
 }
-.home-header {
+
+.home-container {
   max-width: 600px;
   margin: auto;
   padding: 32px;
