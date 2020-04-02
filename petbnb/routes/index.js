@@ -27,7 +27,7 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', {});
+  res.render('', {});
 });
 
 router.post('/login', function(req, res, next) {

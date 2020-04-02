@@ -118,3 +118,31 @@ a {
   top: 48px;
   left: 48px;
 }
+
+/* Home page */
+.home-container {
+  padding: 40px;
+}
+.home-header {
+  max-width: 600px;
+  margin: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.home-hero {
+  height: 200px;
+}
+
+.home-header h1 {
+  margin-bottom: 0px;
+}
+
+#dog-gif{
+  height: auto;
+  max-height: 100%;
+  position: relative;
+  width: auto;
+}
