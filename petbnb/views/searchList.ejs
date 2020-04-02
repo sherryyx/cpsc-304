@@ -1,45 +1,56 @@
+<%- include('header'); -%>
 <!DOCTYPE html>
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <title>Choose what to search</title>
 </head>
 <body>
     <form action="/searchServiceType" method="get">
         <button class="mdc-button">
             <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
+            <span class="mdc-button__label">Search Service Type</span>
         </button>
     </form>
     <form action="/searchSitterName" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value=""><br>
+        <input type="submit" value="Submit">
     </form>
     <form action="/searchPrice" method="get">
         <button class="mdc-button">
             <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
+            <span class="mdc-button__label">Search by Price</span>
         </button>
     </form>
     <form action="/searchDaysAvailable" method="get">
         <button class="mdc-button">
             <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
+            <span class="mdc-button__label">Search by Days Available</span>
         </button>
     </form>
     <form action="/searchSitterProfile" method="get">
         <button class="mdc-button">
             <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
+            <span class="mdc-button__label">Search by Sitter Profile</span>
         </button>
     </form>
-    <form action="/searchBookService" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
+    <p>Filter by: </p>
+    <form action="/searchResults" method="post">
+        <select class="selectpicker" id="searchList" name="selectpicker">
+          <option name ="name" value="Name"> Name</option>
+          <option value="Date Available"> Date Available</option>
+          <option value="Service Type"> Service Type</option>
+          </select>
+          <input type="submit" value="accept"/>
     </form>
+    <%- include searchResults.ejs %>
 </body>
 </html>
+
+
+<%- include('footer'); -%>

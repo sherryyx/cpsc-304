@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const store = require('../store');
+const db = require('./../queries');
 
 let current_user;
 
@@ -31,8 +32,55 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/searchList', function(req, res, next) {
-  res.render('searchList', {});
+    res.render('searchList', {results : []});
 });
+
+router.get('/bookService', function(req, res, next) {
+  res.render('bookService', {results : []});
+});
+
+router.post('/searchResults', function(req, res, next) {
+  if (req.body.selectpicker == 'Date Available')
+  {
+    db.pool.query('SELECT * FROM petboarding;', (error, results) => {
+      if (error) {
+        throw error
+      }
+      console.log(req.body);
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+  else if (req.body.selectpicker == 'Name')
+  {
+
+  }
+  else
+  {
+
+  }
+});
+
+router.post('/bookService', function(req, res, next) {
+  if (req.body.selectpicker == 'Date Available')
+  {
+    db.pool.query('INSERT INTO booking VALUES (' + ',' + ')', (error, results) => {
+      if (error) 
+      {
+        throw error
+      }
+      console.log(req.body);
+      res.render('bookService', {results : results.rows});
+    })
+  }
+});
+
+router.get('/searchResults', function(req, res, next) {
+  res.render('searchResults', {results : []});
+});
+
+
+
+
 
 
 
