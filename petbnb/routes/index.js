@@ -27,7 +27,7 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('', {});
+  res.render('login', {});
 });
 
 router.post('/login', function(req, res, next) {
@@ -40,5 +40,26 @@ router.post('/login', function(req, res, next) {
 router.get('/searchList', function(req, res, next) {
   res.render('searchList', {});
 });
+
+router.get('/pastBookings', function(req, res, next) {
+  res.render('pastBookings', {});
+});
+
+router.get('/editProfile', function(req, res, next) {
+  res.render('editProfile', {});
+});
+
+router.get('/upcomingBookings', function(req, res, next) {
+  res.render('upcomingBookings', {});
+});
+
+router.get('/pets', function(req, res, next) {
+  res.render('pets', {});
+});
+
+router.get('/promoCodes', function(req, res, next) {
+  res.render('promoCodes', {});
+});
+
 
 module.exports = router;
