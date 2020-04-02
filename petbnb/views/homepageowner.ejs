@@ -1,3 +1,73 @@
 <%- include('header'); -%>
-<p><%= current_user["name"] %></p>
+<div class="home-container">
+    <div class="home-header">
+        <div class="home-hero">
+            <img src="/assets/doggie.gif" alt="dog" id="dog-gif">
+        </div>
+        <h1>Hi <%= current_user["name"] %>,</h1>
+        <h2>Welcome to Petbnb!</h2>
+        <h3>🐱🐶Your profile</h3>
+        <ul class="mdc-list mdc-list--two-line">
+            <li role="separator" class="mdc-list-divider"></li>
+            <a href="/pets">
+                <li class="mdc-list-item" tabindex="0">
+                    <span class="mdc-list-item__text">
+                    <span class="mdc-list-item__primary-text">Your pets</span>
+                    <span class="mdc-list-item__secondary-text">Add or edit details about your pets.</span>
+                    </span>
+                </li>
+            </a>
+            <li role="separator" class="mdc-list-divider"></li>
+            <a href="/editProfile">
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__text">
+                        <span class="mdc-list-item__primary-text">Edit profile</span>
+                        <span class="mdc-list-item__secondary-text">Edit details about your profile.</span>
+                    </span>
+                </li>
+            </a>
+            <li role="separator" class="mdc-list-divider"></li>
+        </ul>
+        <h3>📆Bookings</h3>
+        <ul class="mdc-list mdc-list--two-line">
+            <li role="separator" class="mdc-list-divider"></li>
+            <a href="/searchList">
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__text">
+                    <span class="mdc-list-item__primary-text">Make a booking</span>
+                    <span class="mdc-list-item__secondary-text">Find a pet sitter, and make a booking for your pet.</span>
+                    </span>
+                </li>
+            </a>
+            <li role="separator" class="mdc-list-divider"></li>
+            <a href="/upcomingBookings">
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__text">
+                    <span class="mdc-list-item__primary-text">Upcoming Bookings</span>
+                    <span class="mdc-list-item__secondary-text">View or modify your upcoming bookings.</span>
+                    </span>
+                </li>
+            </a>
+            <li role="separator" class="mdc-list-divider"></li>
+            <a href="/pastBookings">
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__text">
+                    <span class="mdc-list-item__primary-text">Past bookings</span>
+                    <span class="mdc-list-item__secondary-text">Leave a review for your past bookings.</span>
+                    </span>
+                </li>
+            </a>    
+            <li role="separator" class="mdc-list-divider"></li>
+            <a href="/promoCodes">
+                <li class="mdc-list-item">
+                    <span class="mdc-list-item__text">
+                    <span class="mdc-list-item__primary-text">Apply a promo code</span>
+                    <span class="mdc-list-item__secondary-text">Apply a promo code to an upcoming booking.</span>
+                    </span>
+                </li>
+            </a>    
+        <li role="separator" class="mdc-list-divider"></li>
+        </ul>
+    </div>
+</div>
 <%- include('footer'); -%>

@@ -1,6 +1,6 @@
 var faker = require('faker');
 
-const createPet = (knex, pet_id, owner_id) => {
+const createPet = (knex, pet_id, owner_id) => { 
   return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
   VALUES(
     '${faker.name.firstName()}',
@@ -25,7 +25,6 @@ const createPetOwner = (knex, id) => {
     let records = [];
 
     const owner_id = rows[0].user_id;
-    console.log(owner_id);
 
     for (let pet_id = 2*id; pet_id <= 2*id+1; pet_id++) {
       records.push(createPet(knex, pet_id, owner_id));

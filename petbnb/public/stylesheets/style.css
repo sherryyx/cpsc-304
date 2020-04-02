@@ -51,7 +51,15 @@ a {
   padding: 32px 0px 32px 0px;
 }
 
-/** Sign up page **/
+.landing-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.landing-buttons button {
+  margin-right: 16px;
+}
+/** Sign up page and login page **/
 .form-container {
   max-width: 500px;
   margin: auto;
@@ -89,15 +97,57 @@ a {
   margin-top: 7px;
 }
 
-.signup-container {
+.signup-container, .login-container {
   background-image: url("../assets/signup-bg.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
-  padding-top: 100px;
+  min-height: 100%;
+  height: auto;
+  padding: 100px 0px 100px 0px;
 }
 
-.signup-container .mdc-button{
+.signup-container .mdc-button, .login-container .mdc-button{
   margin-top: 24px;
+}
+
+.back-button {
+  margin: auto;
+  width: 56px;
+  position: absolute;
+  top: 48px;
+  left: 48px;
+}
+
+/* Home page */
+.home-container {
+  padding: 40px;
+}
+.home-header {
+  max-width: 600px;
+  margin: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.home-hero {
+  height: 200px;
+}
+
+.home-header h1 {
+  margin-bottom: 0px;
+}
+
+#dog-gif{
+  height: auto;
+  max-height: 100%;
+  position: relative;
+  width: auto;
+}
+
+.mdc-list a {
+  text-decoration: none;
+  color: var(--mdc-theme-text-primary-on-background);
 }
