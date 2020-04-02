@@ -59,7 +59,7 @@ a {
 .landing-buttons button {
   margin-right: 16px;
 }
-/** Sign up page **/
+/** Sign up page and login page **/
 .form-container {
   max-width: 500px;
   margin: auto;
@@ -102,10 +102,19 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
-  padding-top: 100px;
+  min-height: 100%;
+  height: auto;
+  padding: 100px 0px 100px 0px;
 }
 
 .signup-container .mdc-button, .login-container .mdc-button{
   margin-top: 24px;
+}
+
+.back-button {
+  margin: auto;
+  width: 56px;
+  position: absolute;
+  top: 48px;
+  left: 48px;
 }

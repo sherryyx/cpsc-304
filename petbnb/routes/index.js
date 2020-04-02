@@ -19,15 +19,15 @@ router.get('/signup', function(req, res, next) {
   res.render('signup', {});
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('login', {});
-});
-
 router.post('/signup', function(req, res, next) {
   store.createPetOwner(req.body).then(({rows}) => {
     current_user = rows[0];
     res.redirect('/home');
   });
+});
+
+router.get('/login', function(req, res, next) {
+  res.render('login', {});
 });
 
 router.post('/login', function(req, res, next) {
@@ -40,7 +40,5 @@ router.post('/login', function(req, res, next) {
 router.get('/searchList', function(req, res, next) {
   res.render('searchList', {});
 });
-
-
 
 module.exports = router;
