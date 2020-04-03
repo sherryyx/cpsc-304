@@ -48,6 +48,7 @@ router.get('/bookService', function(req, res, next) {
 });
 
 router.post('/searchResults', function(req, res, next) {
+  console.log(req.body)
   if (req.body.selectpicker == 'Date Available')
   {
     db.pool.query('SELECT * FROM petboarding;', (error, results) => {
@@ -69,15 +70,28 @@ router.post('/searchResults', function(req, res, next) {
 });
 
 router.post('/bookService', function(req, res, next) {
+    db.pool.query('SELECT value FRO+' , (error, results) => {
+      if (error)
+      {
+        res.render('homepageowner', {results : results.rows});
+        throw error
+      }
+      console.log(req.body);
+      res.render('homepageowner', {results : results.rows});
+    })
+});
+
+router.post('/confirmBookService', function(req, res, next) {
   if (req.body.selectpicker == 'Date Available')
   {
     db.pool.query('INSERT INTO booking VALUES (' + ',' + ')', (error, results) => {
       if (error) 
       {
+        res.render('homepageowner', {results : results.rows});
         throw error
       }
       console.log(req.body);
-      res.render('bookService', {results : results.rows});
+      res.render('homepageowner', {results : results.rows});
     })
   }
 });
