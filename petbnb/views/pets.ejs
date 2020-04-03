@@ -1,3 +1,30 @@
 <%- include('header'); -%>
-<h1>pets</h1>
+<div class="container">
+    <div class="pets-container">
+        <h1>Your pets</h1>
+        <% pets.forEach(function (pet) { %>
+            <div class="mdc-card pet-card">
+                <h2><%= pet.name%>, <div class="pet-breed"><%= pet.breed%></div></h2>
+                <h3>Care instructions</h3>
+                <p><%= pet.careinstructions%></p>
+                <h3>Diet instructions</h3>
+                <p><%= pet.dietinstructions%></p>
+                <h3>Age</h3>
+                <p><%= pet.age%></p>
+                <h3>Weight</h3>
+                <p><%= pet.weight%></p>
+                <div class="mdc-card__actions">
+                    <button class="mdc-button mdc-card__action mdc-card__action--button">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Edit</span>
+                    </button>
+                    <button class="mdc-button mdc-card__action mdc-card__action--button">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Remove</span>
+                    </button>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
 <%- include('footer'); -%>

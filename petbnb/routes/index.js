@@ -37,6 +37,13 @@ router.post('/login', function(req, res, next) {
   })
 });
 
+// Get pets view
+router.get('/pets', function(req, res, next) {
+  store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+    res.render('Pets', { pets: rows, current_user: current_user });
+  });
+});
+
 router.get('/searchList', function(req, res, next) {
   res.render('searchList')
 });
@@ -156,10 +163,6 @@ router.get('/editProfile', function(req, res, next) {
 
 router.get('/upcomingBookings', function(req, res, next) {
   res.render('upcomingBookings', {});
-});
-
-router.get('/pets', function(req, res, next) {
-  res.render('pets', {});
 });
 
 router.get('/promoCodes', function(req, res, next) {
