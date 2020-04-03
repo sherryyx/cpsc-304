@@ -47,12 +47,18 @@ router.get('/pastBookings', function(req, res, next) {
   });
 });
 
+// Get pet sitter profile
 router.get('/petsitter/:petsitter_id', function(req, res, next) {
   const petSitter_id = req.params.petsitter_id;
   store.getPetSitterProfile(petSitter_id).then(({rows}) => {
     const profileInfo = rows[0];
     store.getReviewsForSitter(petSitter_id).then(({rows}) => {
-      res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: rows});
+      const reviews = rows;
+      store.getAverageRating(petSitter_id).then(({rows}) => {
+        console.log(rows[0]);
+        const averageRating = rows[0];
+        res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: reviews, averageRating: averageRating});
+      });
     });
   });
 });
