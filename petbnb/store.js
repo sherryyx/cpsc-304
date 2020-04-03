@@ -173,6 +173,11 @@ const getSitterRanking = () => {
     GROUP BY S.user_id;`);
 }
 
+const insertBooking = (time, service_id, user_id, pet_id) => {
+    return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
+    VALUES ( ${time}, ${service_id}, ${user_id}, ${pet_id});`);
+}
+
 module.exports = {
     getPetsOfPetOwner,
     sortSearchResults,
@@ -194,5 +199,6 @@ module.exports = {
     priceGt,
     priceLt,
     serviceType,
-    getExperiencedSitters
+    getExperiencedSitters,
+    insertBooking
 };

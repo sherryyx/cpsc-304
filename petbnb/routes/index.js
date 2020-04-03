@@ -42,8 +42,8 @@ router.get('/searchList', function(req, res, next) {
   res.render('searchList')
 });
 
-router.get('/bookService', function(req, res, next) {
-  res.render('bookService', {results : []});
+router.post('/bookService', function(req, res, next) {
+  res.render('bookService', {service_id : req.body.service_id, user_id : req.body.user_id});
 });
 
 router.post('/searchResults', function(req, res, next) {
@@ -108,12 +108,11 @@ router.post('/getProfile', function(req, res, next) {
   })
 });
 
-router.post('/bookService', function(req, res, next) {
-  store.getPetSitterProfile(req.body.user_id).then((result) => {
-    store.getReviewsForSitter(req.body.user_id).then((results) => {
-      res.render('sitterProfile', {profile : result, reviews : results.rows});
+router.post('/confirmBookService', function(req, res, next) {
+  let pet_id = 1;
+    store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], pet_id).then((results) => {
+      res.redirect('/home');
     })
-  })
 });
 
 router.get('/searchResults', function(req, res, next) {
