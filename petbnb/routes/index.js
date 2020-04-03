@@ -38,7 +38,93 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/searchList', function(req, res, next) {
-  res.render('searchList', {});
+
+  res.render('searchList')
+});
+
+router.get('/bookService', function(req, res, next) {
+  res.render('bookService', {results : []});
+});
+
+router.post('/searchResults', function(req, res, next) {
+  if (req.body.column == 'pricegt')
+  {
+    store.priceGt(req.body.textInput).then((results) => {
+      current_filter = `pricePer > ${req.body.textInput}`
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+  else if (req.body.column == 'pricels')
+  {
+    store.priceLs(req.body.textInput).then((results) => {
+      current_filter = `pricePer < ${req.body.textInput}`
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+  else if (req.body.column == 'service')
+  {
+    store.serviceType(req.body.textInput).then((results) => {
+      current_filter = `serviceType = ${req.body.textInput}`
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+});
+
+router.get('/filterGoodSitters', function(req, res, next) {
+  store.getExperiencedSitters().then((results) => {
+    res.render('searchGoodSitters', {results : results.rows});
+  })
+})
+
+router.post('/searchResultsFilter', function(req, res, next) {
+  console.log(req.body)
+  let project = ""
+  if (req.body.col1 != null)
+  {
+    project = 'service_id'
+  }
+  if (req.body.col2 != null)
+  {
+    project = project == "" ? 'priceper' : project + ', ' + 'priceper'
+  }
+  if (req.body.col3 != null)
+  {
+    project = project == "" ? 'user_id' : project + ', ' + 'user_id'
+  }
+  if (req.body.col4 != null)
+  {
+    project = project == "" ? 'servicetype' : project + ', ' + 'servicetype'
+  }
+  store.sortSearchResults(project, current_filter).then((results) => {
+    res.render('searchResultsFilter', {results : results.rows});
+  })
+})
+
+router.post('/getProfile', function(req, res, next) {
+  store.getPetSitterProfile(req.body.user_id).then((result) => {
+    store.getReviewsForSitter(req.body.user_id).then((results) => {
+      res.render('sitterProfile', {profile : result, reviews : results.rows});
+    })
+  })
+});
+
+router.post('/bookService', function(req, res, next) {
+  store.getPetSitterProfile(req.body.user_id).then((result) => {
+    store.getReviewsForSitter(req.body.user_id).then((results) => {
+      res.render('sitterProfile', {profile : result, reviews : results.rows});
+    })
+  })
+});
+
+router.get('/searchResults', function(req, res, next) {
+  console.log(req.body)
+  res.render('searchResults', {results : []});
+});
+
+router.get('/sitterRankings', function(req, res, next) {
+  store.getSitterRanking().then((results) => {
+    res.render('sitterRankings', {results : results.rows});
+  })
 });
 
 router.get('/pastBookings', function(req, res, next) {

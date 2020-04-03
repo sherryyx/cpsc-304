@@ -107,6 +107,7 @@ const createReview = (reviewcontent, rating, owneruser_id, sitteruser_id) => {
     ) returning *;`);
 }
 
+
 // Get average rating for a single pet sitter
 const getAverageRating = (user_id) => {
     return knex.raw(`SELECT AVG(rating)
@@ -138,9 +139,44 @@ const filterServices = ((field, value, sign) => {
     }
 })
 
+const priceGt = (textInput) => {
+    return knex.raw(`SELECT * FROM service WHERE pricePer > ${textInput};`);
+}
+
+const priceLt = (textInput) => {
+    return knex.raw(`SELECT * FROM service WHERE pricePer < ${textInput};`);
+}
+
+const serviceType = (textInput) => {
+    return knex.raw(`SELECT * FROM service WHERE serviceType = ${textInput};`);
+}
+
+const getExperiencedSitters = () => {
+    return knex.raw(`SELECT T.user_id FROM petsitter T
+    WHERE NOT EXISTS 
+    (SELECT R.user_id 
+      FROM petowner R
+      EXCEPT 
+      (SELECT S.owneruser_id 
+        FROM review S 
+        WHERE T.user_id = S.sitteruser_id));`);
+}
+
+const sortSearchResults = (project, current_filter) => {
+    return knex.raw(`SELECT ${project} FROM service WHERE ${current_filter};`);
+}
+
+const getSitterRanking = () => {
+    return knex.raw(`SELECT S.user_id, AVG(R.rating)
+    FROM review R, petSitter S
+    WHERE R.sitteruser_id = S.user_id
+    GROUP BY S.user_id;`);
+}
 
 module.exports = {
     getPetsOfPetOwner,
+    sortSearchResults,
+    getSitterRanking,
     createPetOwner,
     getPetOwner,
     getBookingInformation,
@@ -154,5 +190,9 @@ module.exports = {
     redeemPromoCode,
     getAverageRating,
     filterServices,
-    groupAverageRatingByPetSitter
+    groupAverageRatingByPetSitter,
+    priceGt,
+    priceLt,
+    serviceType,
+    getExperiencedSitters
 };
