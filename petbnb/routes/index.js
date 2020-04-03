@@ -38,7 +38,6 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/searchList', function(req, res, next) {
-
   res.render('searchList')
 });
 
@@ -103,7 +102,7 @@ router.post('/searchResultsFilter', function(req, res, next) {
 router.post('/getProfile', function(req, res, next) {
   store.getPetSitterProfile(req.body.user_id).then((result) => {
     store.getReviewsForSitter(req.body.user_id).then((results) => {
-      res.render('sitterProfile', {profile : result, reviews : results.rows});
+      res.render('sitterProfile', {profile : result.rows, reviews : results.rows});
     })
   })
 });
