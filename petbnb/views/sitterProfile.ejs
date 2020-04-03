@@ -1,0 +1,58 @@
+<%- include('header'); -%>
+<div class="container">
+    <form action="/pastBookings" method="get" class="back-button">
+        <button class="mdc-fab" aria-label="back">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+        </button>
+    </form>
+    <div class="review-container">
+        <h1><%= profile.name %></h1>
+        <h3>Bio</h3>
+        <h4><%= profile.bio %></h4>
+        <h2>Reviews</h2>
+        <div class="margin"></div>
+        <% reviews.forEach(function(review) { %>
+            <div class="review">
+                <p role="separator" class="mdc-list-divider"></p>
+                <h3><%= review.ownername %> said: </h3>
+                <h4><%= review.reviewcontent %></h4>
+                <h3>Rating ⭐</h3>
+                <h4><%= review.rating %>/5</h4>
+            </div>
+        <% }); %>
+        <p role="separator" class="mdc-list-divider"></p>
+        <div class="margin"></div>
+        <div class="add-review">
+            <h2>Leave a review</h2>
+            <form action=<%= `/petsitter/${profile.user_id}` %> method ="post" class="leave-review">
+                <label class="mdc-text-field mdc-text-field--textarea" data-mdc-auto-init="MDCTextField">
+                    <textarea class="mdc-text-field__input" aria-labelledby="my-label-id" rows="8" cols="40" id="user_review" name="user_review"></textarea>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" id="my-label-id">What did you think of <%= profile.name %>'s service?</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </label>
+                <h3>Rate your experience</h3>
+                <div class="rating-slider">
+                    <input type="range" id="rating" name="rating" min="1" max="5" value="1" step="1" list="tickmarks" class="slider">
+                    <datalist id="tickmarks">
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+                    </datalist>
+                </div>
+                <button class="mdc-button mdc-button--unelevated">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Submit review</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('footer'); -%>

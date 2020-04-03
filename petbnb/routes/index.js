@@ -43,10 +43,30 @@ router.get('/searchList', function(req, res, next) {
 
 router.get('/pastBookings', function(req, res, next) {
   store.getBookingInformation(current_user).then(({rows}) => {
-    console.log(rows);
     res.render('pastBookings', {bookings: rows, current_user: current_user});
   });
 });
+
+router.get('/petsitter/:petsitter_id', function(req, res, next) {
+  const petSitter_id = req.params.petsitter_id;
+  store.getPetSitterProfile(petSitter_id).then(({rows}) => {
+    const profileInfo = rows[0];
+    store.getReviewsForSitter(petSitter_id).then(({rows}) => {
+      res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: rows});
+    });
+  });
+});
+
+router.post('/petsitter/:petsitter_id', function(req, res, next) {
+  console.log(req.body);
+  const petsitter_id = req.params.petsitter_id;
+  let rating = parseInt(req.body.rating);
+  
+  store.createReview(req.body.user_review, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
+    res.redirect(`/petsitter/${petsitter_id}`);
+  });
+});
+
 
 router.get('/editProfile', function(req, res, next) {
   res.render('editProfile', {});

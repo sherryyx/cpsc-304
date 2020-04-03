@@ -161,17 +161,8 @@ a {
 }
 
 /* Past bookings page */
-.bookings-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-}
-
 .booking {
-  padding: 24px;
+  padding: 24px 24px 24px 28px;
   margin: 16px 0px 16px 0px;
 }
 
@@ -182,4 +173,74 @@ a {
 .booking h3 {
   font-size: 14px;
   margin: 8px 0px 4px 0px;
+}
+
+.mdc-card__actions {
+  padding: 0px;
+  float: right;
+}
+
+.review-button .mdc-button {
+  margin: 16px 0px 0px -8px;
+}
+
+.review-button form {
+  margin-bottom: 0px;
+}
+
+/** Pet sitter profile **/
+.review .mdc-list-divider {
+  margin: 0px 0px 20px 0px;  
+}
+
+.add-review .mdc-text-field {
+  width: 100%;
+}
+
+.review-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.review-container h2 {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 0px;
+  margin-top: 32px;
+}
+
+.review-container h4 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 48px;
+}
+
+.review h4 {
+  font-size: 18px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.review h3 {
+  margin-bottom: 8px;
+}
+
+.leave-review {
+  padding: 32px 0px 24px 0px;
+}
+
+.rating-slider {
+  margin-bottom: 32px;
+}
+
+.slider {
+  width: 300px;
+}
+
+.review-container .margin {
+  height: 28px;
 }
