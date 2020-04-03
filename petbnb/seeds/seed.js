@@ -10,7 +10,19 @@ const createPet = (knex, owner_id) => {
     '${faker.random.arrayElement(["Chihuahua", "Domestic Short Hair Cat", "Husky", "Hairless Cat", "Labradoodle"])}',
     ${faker.finance.amount(5, 20, 1)},
     ${owner_id}
-  );`);
+  ) returning pet_id;`).then(({rows}) => {
+    const pet_id = rows[0].pet_id;
+    return createPetSitter(knex).then(({rows}) => {
+      const sitter_id = rows[0].user_id;
+
+      let records = [];
+
+      records.push(createServiceAndBooking(knex, sitter_id, pet_id, owner_id));
+      records.push(createReviews(knex, sitter_id, owner_id));
+
+      return Promise.all(records);
+    });
+  });  
 }
 
 const createPetOwner = (knex, id) => {
@@ -30,14 +42,14 @@ const createPetOwner = (knex, id) => {
       records.push(createPet(knex, owner_id));
     }
 
-    records.push(createPetSitter(knex, owner_id));
+    // records.push(createPetSitter(knex, owner_id));
 
     return Promise.all(records);
   });
 }
 
 // Create petSitter, associated services, and reviews
-const createPetSitter = (knex, owner_id) => {
+const createPetSitter = (knex) => {
   return knex.raw(`INSERT INTO petsitter (phonenumber, name, bio, housenumber, street, postalcode)
   VALUES (
     '${faker.phone.phoneNumber()}',
@@ -46,25 +58,19 @@ const createPetSitter = (knex, owner_id) => {
     ${faker.random.number({min: 100, max: 9999})},
     '${faker.address.streetName().replace("'", "''")}',
     '${faker.address.zipCode()}'
-  ) returning user_id;`).then(({rows}) => {
-    const sitter_id = rows[0].user_id;
-
-    let records = [];
-
-    records.push(createService(knex, sitter_id));
-    records.push(createReviews(knex, sitter_id, owner_id));
-
-    return Promise.all(records);
-  });
+  ) returning user_id;`);
 }
 
-const createService = (knex, sitter_id) => {
+const createServiceAndBooking = (knex, sitter_id, pet_id, owner_id) => {
     return knex.raw(`INSERT INTO service (pricePer, user_id, serviceType)
     VALUES (
         '${faker.finance.amount(12, 60, 2)}',
         '${sitter_id}',
-        '${faker.random.arrayElement(["pet boarding", "pet walking", "drop in visit"])}'
-    )`);  
+        '${faker.random.arrayElement(["Pet boarding", "Pet walking", "Drop in visit"])}'
+    ) returning service_id;`).then(({rows}) => {
+      const service_id = rows[0].service_id;
+      return createBooking(knex, service_id, owner_id, pet_id);
+    });
 }
 
 const createReviews = (knex, sitter_id, owner_id) => {
@@ -77,10 +83,19 @@ const createReviews = (knex, sitter_id, owner_id) => {
   )`);
 }
 
+const createBooking = async (knex, service_id, owner_id, pet_id) => {
+  return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
+    VALUES (
+      ${faker.random.arrayElement([0.5, 1, 2, 24, 48])},
+      ${service_id},
+      ${owner_id},
+      ${pet_id}
+    )`);
+}
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review`)
+  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking;`)
     .then(function () {
       let records = [];
 

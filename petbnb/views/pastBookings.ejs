@@ -1,3 +1,36 @@
 <%- include('header'); -%>
-<h1>past bookings</h1>
+<div class="container">
+    <form action="/home" method="get" class="back-button">
+        <button class="mdc-fab" aria-label="back">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+        </button>
+    </form>
+    <div class="home-container">
+        <h1>Your bookings</h1>
+        <h2>View your bookings and leave reviews</h2>
+        <% bookings.forEach(function(booking) { %>
+            <div class="mdc-card booking">
+                <h2><%= booking.sittername %></h2>
+                <h4><%= booking.servicetype %> for <%= booking.petname %></h4>
+                <h3>Total price</h3>
+                <p>$<%= booking.totalprice.toFixed(2) %></p>
+                <h3>Duration</h3>
+                <p><%= booking.duration %> hrs</p>
+                <div class="mdc-card__actions review-button">
+                    <form action="<%= `/petsitter/${booking.sitter_id}` %>" method="get">
+                        <button class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Leave a review</span>
+                        </button>
+                    </form> 
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
 <%- include('footer'); -%>
+
+<script>
+    
+</script>
