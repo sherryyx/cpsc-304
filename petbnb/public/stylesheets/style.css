@@ -164,6 +164,9 @@ a {
 .booking {
   padding: 24px 24px 24px 28px;
   margin: 16px 0px 16px 0px;
+  border: solid;
+  border-width: 1px;
+  border-color: rgb(206, 206, 206);
 }
 
 .booking h1, .booking h2,.booking p{
