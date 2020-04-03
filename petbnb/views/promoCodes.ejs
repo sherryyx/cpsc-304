@@ -1,25 +1,17 @@
 <%- include('header'); -%>
-<div class="mdc-data-table">
-  <table class="mdc-data-table__table" aria-label="Dessert calories">
-    <thead>
-      <tr class="mdc-data-table__header-row">
-        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">PromoCodeString</th>
-        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody class="mdc-data-table__content">
-        <% for (const c of promoCodes) { %>
-            <tr class="mdc-data-table__row">
-                <td contenteditable class="mdc-data-table__cell"><%= c['promocodestring'] %></td>
-                <td contenteditable class="mdc-data-table__cell mdc-data-table__cell--numeric" ><%= c['value'] %></td>
-                <td class="mdc-data-table__cell"><button class="mdc-button">  <span class="mdc-button__ripple"></span> Apply</button></td>
-            </tr>
-        <% }; %>
-    </tbody>
-  </table>
-</div>
-</div>
+<form action="/promoCodes" method="POST" class="form-container">
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <div class="mdc-text-field__ripple"></div>
+      <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="promoCode" name="promoCode">
+      <span class="mdc-floating-label" id="my-label-id">PromoCode</span>
+      <div class="mdc-line-ripple"></div>
+  </label>
 
+  <button class="mdc-button mdc-button--unelevated">
+      <div class="mdc-button__ripple"></div>
+      <span class="mdc-button__label">REEDEM</span>
+  </button>
+</form>
 <%- include('footer'); -%>
 
 

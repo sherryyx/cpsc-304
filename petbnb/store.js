@@ -79,6 +79,30 @@ const getUpcomingBookings =  () => {
 return knex.raw(`SELECT * FROM promoCode WHERE promocodestring = '${promoCodeString}';`);
 };
 
+const redeemPromoCode = (promoCodeString, user_id) => {
+    return knex.raw(`INSERT INTO redeems VALUES ('${promoCodeString}', '${user_id}')`)
+}
+
+// Aggregation Query
+const averagePetSitterRating = (() => {
+    return knex.raw(`SELECT AVG(R.rating)
+    FROM review R, petSitter S
+    WHERE R.sitteruser_id = S.user_id;`)
+});
+
+// Filter Services
+const filterServices = ((field, value, sign) => {
+    if (field === 'pricePer') {
+        return knex.raw(`SELECT * 
+        FROM service
+        WHERE pricePer '${sign}' ${value}` );
+    } else if (field === 'serviceType') {
+        return knex.raw(`SELECT * 
+        FROM service
+        WHERE serviceType = ${value}` );
+    }
+})
+
 module.exports = {
     getPetsOfPetOwner,
     createPetOwner,
@@ -88,5 +112,8 @@ module.exports = {
     removePet,
     updatePetInfo,
     searchForPromoCode,
-    getUpcomingBookings
+    getUpcomingBookings,
+    redeemPromoCode,
+    averagePetSitterRating,
+    filterServices
 };

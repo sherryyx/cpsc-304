@@ -98,12 +98,16 @@ router.get('/pets', function(req, res, next) {
 });
 
 router.get('/promoCodes', function(req, res, next) {
-  res.render('promoCodes', {promoCodes:[]});
+  res.render('promoCodes', {code:[]});
 });
 
-router.put('/promoCodes', function(req, res, next) {
-  store.searchForPromoCode(req.body.promocodestring).then(({rows}) => {
-    res.render('promoCodes', { promoCodes: rows, current_user: current_user })
+router.post('/promoCodes', function(req, res, next) {
+  console.log(req.body);
+  store.searchForPromoCode(req.body.promoCode).then(({rows}) => {
+    console.log(rows[0]);
+    store.redemPromoCode(rows[0].promocodestring, current_user["user_id"]).then(() => {
+      res.render('promoCodes', {})
+    })
 })
 });
 
