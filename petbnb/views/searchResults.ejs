@@ -6,6 +6,89 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+      <div class="home-container" >
+        <form action="/searchResultsFilter" method="post">
+          <div class="mdc-form-field">
+              <div class="mdc-checkbox">
+                <input type="checkbox"
+                       class="mdc-checkbox__native-control"
+                       id="checkbox-1"
+                       name="col1"/>
+                <div class="mdc-checkbox__background">
+                  <svg class="mdc-checkbox__checkmark"
+                       viewBox="0 0 24 24">
+                    <path class="mdc-checkbox__checkmark-path"
+                          fill="none"
+                          d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div class="mdc-checkbox__ripple"></div>
+              </div>
+              <label for="checkbox-1">service id</label>
+            </div>
+            <div class="mdc-form-field">
+                <div class="mdc-checkbox">
+                  <input type="checkbox"
+                         class="mdc-checkbox__native-control"
+                         id="checkbox-1"
+                         name="col2"/>
+                  <div class="mdc-checkbox__background">
+                    <svg class="mdc-checkbox__checkmark"
+                         viewBox="0 0 24 24">
+                      <path class="mdc-checkbox__checkmark-path"
+                            fill="none"
+                            d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                    </svg>
+                    <div class="mdc-checkbox__mixedmark"></div>
+                  </div>
+                  <div class="mdc-checkbox__ripple"></div>
+                </div>
+                <label for="checkbox-1">price per hr/day</label>
+              </div>
+              <div class="mdc-form-field">
+                  <div class="mdc-checkbox">
+                    <input type="checkbox"
+                           class="mdc-checkbox__native-control"
+                           id="checkbox-1"
+                           name="col3"/>
+                    <div class="mdc-checkbox__background">
+                      <svg class="mdc-checkbox__checkmark"
+                           viewBox="0 0 24 24">
+                        <path class="mdc-checkbox__checkmark-path"
+                              fill="none"
+                              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                      </svg>
+                      <div class="mdc-checkbox__mixedmark"></div>
+                    </div>
+                    <div class="mdc-checkbox__ripple"></div>
+                  </div>
+                  <label for="checkbox-1">user id</label>
+                </div>
+                <div class="mdc-form-field">
+                    <div class="mdc-checkbox">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="checkbox-1"
+                             name="col4"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                      <div class="mdc-checkbox__ripple"></div>
+                    </div>
+                    <label for="checkbox-1">service type</label>
+                  </div>
+                  <button class="mdc-button mdc-button--unelevated">
+                      <div class="mdc-button__ripple"></div>
+                      <span class="mdc-button__label">Filter columns</span>
+                  </button></td>
+                </form>
       <section class="home">
           <div class="mdc-data-table">
               <table class="mdc-data-table__table" aria-label="Dessert calories">
@@ -32,7 +115,7 @@
                         <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="servicetype" value = <%= results[i].servicetype %>>
                         <button class="mdc-button mdc-button--unelevated">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label">Go To Profile</span>
+                            <span class="mdc-button__label">Book service</span>
                         </button></td>
                       </tr>
                     </form>
@@ -41,6 +124,7 @@
               </table>
             </div>
       </section>
+      </div>
   </body>
 </html>
 <%- include('footer'); -%>

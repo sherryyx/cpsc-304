@@ -40,9 +40,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/searchList', function(req, res, next) {
-  db.pool.query(`SELECT * FROM service`, (error, results) => {
-    res.render('searchList', {results : results.rows});
-  })
+  res.render('searchList')
 });
 
 router.get('/bookService', function(req, res, next) {
@@ -52,48 +50,31 @@ router.get('/bookService', function(req, res, next) {
 router.post('/searchResults', function(req, res, next) {
   if (req.body.column == 'pricegt')
   {
-    db.pool.query(`SELECT * FROM service WHERE pricePer > ${req.body.textInput}`, (error, results) => {
-      if (error) {
-        throw error
-      }
+    store.priceGt(req.body.textInput).then((results) => {
       current_filter = `pricePer > ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
   }
   else if (req.body.column == 'pricels')
   {
-    db.pool.query(`SELECT * FROM service WHERE pricePer < ${req.body.textInput}`, (error, results) => {
-      if (error) {
-        throw error
-      }
+    store.priceLs(req.body.textInput).then((results) => {
       current_filter = `pricePer < ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
   }
   else if (req.body.column == 'service')
   {
-    db.pool.query(`SELECT * FROM service WHERE serviceType = ${req.body.textInput}`, (error, results) => {
-      if (error) {
-        throw error
-      }
-      current_filter = `WHERE serviceType = ${req.body.textInput}`
+    store.serviceType(req.body.textInput).then((results) => {
+      current_filter = `serviceType = ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
   }
 });
 
 router.get('/filterGoodSitters', function(req, res, next) {
-  db.pool.query(`SELECT T.user_id FROM petsitter T
-  WHERE NOT EXISTS 
-  (SELECT R.user_id 
-    FROM petowner R
-    EXCEPT 
-    (SELECT S.owneruser_id 
-      FROM review S 
-      WHERE T.user_id = S.sitteruser_id));` , (error, results) => {
-        console.log(results)
-    res.render('searchGoodSitters', {results : results.rows})
-})
+  store.getExperiencedSitters().then((results) => {
+    res.render('searchGoodSitters', {results : results.rows});
+  })
 })
 
 router.post('/searchResultsFilter', function(req, res, next) {
@@ -115,38 +96,25 @@ router.post('/searchResultsFilter', function(req, res, next) {
   {
     project = project == "" ? 'servicetype' : project + ', ' + 'servicetype'
   }
-  db.pool.query(`SELECT ${project} FROM service ${current_filter}` , (error, results) => {
-    res.render('searchResultsFilter', {results : results.rows})
+  store.sortSearchResults(project, current_filter).then((results) => {
+    res.render('searchResultsFilter', {results : results.rows});
   })
 })
 
-router.post('/bookService', function(req, res, next) {
-    db.pool.query(`SELECT user_id, name, bio
-    FROM petSitter
-    WHERE user_id = ${req.body.user_id};` , (error, result) => {
-      db.pool.query(`SELECT review_id, reviewContent, rating, owneruser_id, sitteruser_id, ownerName
-      FROM review
-      INNER JOIN (SELECT name as ownerName, user_id FROM petOwner) AS ownerNames ON ownerNames.user_id = review.owneruser_id
-      WHERE sitteruser_id = ${req.body.user_id}
-      ORDER BY review_id ASC;` , (error, results) => {
-        res.render('sitterProfile', {profile : result.rows, reviews: results.rows});
-      });
+router.post('/getProfile', function(req, res, next) {
+  store.getPetSitterProfile(req.body.user_id).then((result) => {
+    store.getReviewsForSitter(req.body.user_id).then((results) => {
+      res.render('sitterProfile', {profile : result, reviews : results.rows});
     })
+  })
 });
 
-router.post('/confirmBookService', function(req, res, next) {
-  if (req.body.selectpicker == 'Date Available')
-  {
-    db.pool.query('INSERT INTO booking VALUES (' + ',' + ')', (error, results) => {
-      if (error) 
-      {
-        res.render('homepageowner', {results : results.rows});
-        throw error
-      }
-      console.log(req.body);
-      res.render('homepageowner', {results : results.rows});
+router.post('/bookService', function(req, res, next) {
+  store.getPetSitterProfile(req.body.user_id).then((result) => {
+    store.getReviewsForSitter(req.body.user_id).then((results) => {
+      res.render('sitterProfile', {profile : result, reviews : results.rows});
     })
-  }
+  })
 });
 
 router.get('/searchResults', function(req, res, next) {
@@ -155,11 +123,7 @@ router.get('/searchResults', function(req, res, next) {
 });
 
 router.get('/sitterRankings', function(req, res, next) {
-  db.pool.query(`SELECT S.user_id, AVG(R.rating)
-  FROM review R, petSitter S
-  WHERE R.sitteruser_id = S.user_id
-  GROUP BY S.user_id;`, (error, results) => {
-    console.log(results)
+  store.getSitterRanking().then((results) => {
     res.render('sitterRankings', {results : results.rows});
   })
 });
