@@ -1,0 +1,108 @@
+<%- include('header'); -%>
+<div class="mdc-data-table">
+  <table class="mdc-data-table__table" aria-label="Dessert calories">
+    <thead>
+      <tr class="mdc-data-table__header-row">
+        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Pet_ID</th>
+        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Name</th>
+        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Care Instructions</th>
+        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Diet Instructions</th>
+        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Age</th>
+        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Breed</th>
+        <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Weight</th>
+      </tr>
+    </thead>
+    <tbody class="mdc-data-table__content">
+        <% for (const p of pets) { %>
+            <tr class="mdc-data-table__row">
+              <form action='/myPets' method="POST">
+                <td class="mdc-data-table__cell">
+                <input class="mdc-data-table__cell mdc-data-table__cell--numeric" type="number" aria-labelledby="my-label-id" id="pet_id" name="pet_id" value = <%= p['pet_id'] %>>
+                </td>
+                <td class="mdc-data-table__cell">
+                  <input class="mdc-data-table__cell" type="text" aria-labelledby="my-label-id" id="name" name="name" value = <%= p['name'] %>>
+                </td>
+                <td class="mdc-data-table__cell">
+                  <input class="mdc-data-table__cell" type="text" aria-labelledby="my-label-id" id="careinstructions" name="careinstructions" value = <%= p['careinstructions'] %>>
+                </td>
+                <td class="mdc-data-table__cell">
+                  <input class="mdc-data-table__cell" type="text" aria-labelledby="my-label-id" id="dietinstructions" name="dietinstructions" value = <%= p['dietinstructions'] %>>
+                </td>
+                <td class="mdc-data-table__cell">
+                  <input class="mdc-data-table__cell mdc-data-table__cell--numeric" type="number" aria-labelledby="my-label-id" id="age" name="age" value = <%= p['age'] %>>
+                </td>
+                <td class="mdc-data-table__cell">
+                  <input class="mdc-data-table__cell" type="text" aria-labelledby="my-label-id" id="breed" name="breed" value = <%= p['breed'] %>>
+                </td>
+                <td class="mdc-data-table__cell">
+                  <input class="mdc-data-table__cell mdc-data-table__cell--numeric" type="number" aria-labelledby="my-label-id" id="weight" name="weight" value = <%= p['weight'] %>>
+                </td>
+                <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="type" name="type" value =  "update">
+                <td class="mdc-data-table__cell"><button class="mdc-button" type="submit">  <span class="mdc-button__ripple"></span> Update</button></td>
+            <td class="mdc-data-table__cell">
+            </form>
+            <form action='/myPets' method="POST">
+                <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="pet_id1" value = <%= p['pet_id'] %>>
+                <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="type1" name="type1" value = "delete">
+                <button class="mdc-button" type="submit">  <span class="mdc-button__ripple"></span> Remove</button>
+            </form>
+          </td>
+          </tr>
+        <% }; %>
+    </tbody>
+  </table>
+</div>
+
+<form action="/myPets" method="POST" class="form-container">
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <div class="mdc-text-field__ripple"></div>
+      <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id" id="pet_id2" name="pet_id2">
+      <span class="mdc-floating-label" id="my-label-id">Pet_ID</span>
+      <div class="mdc-line-ripple"></div>
+  </label>
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <div class="mdc-text-field__ripple"></div>
+      <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="name" name="name">
+      <span class="mdc-floating-label" id="my-label-id">Name</span>
+      <div class="mdc-line-ripple"></div>
+  </label>
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <div class="mdc-text-field__ripple"></div>
+      <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id=careinstructions" name="careinstructions">
+      <span class="mdc-floating-label" id="my-label-id">Care Instructions</span>
+      <div class="mdc-line-ripple"></div>
+  </label>
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <div class="mdc-text-field__ripple"></div>
+      <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="dietinstructions" name="dietinstructions">
+      <span class="mdc-floating-label" id="my-label-id">Diet Instructions</span>
+      <div class="mdc-line-ripple"></div>
+  </label>
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+      <div class="mdc-text-field__ripple"></div>
+      <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id" id="age" name="age">
+      <span class="mdc-floating-label" id="my-label-id">Age</span>
+      <div class="mdc-line-ripple"></div>
+  </label>
+  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+    <div class="mdc-text-field__ripple"></div>
+    <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="breed" name="breed">
+    <span class="mdc-floating-label" id="my-label-id">Breed</span>
+    <div class="mdc-line-ripple"></div>
+</label>
+<label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+  <div class="mdc-text-field__ripple"></div>
+  <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id" id="weight" name="weight">
+  <span class="mdc-floating-label" id="my-label-id">Weight</span>
+  <div class="mdc-line-ripple"></div>
+</label>
+  <button class="mdc-button mdc-button--unelevated">
+      <div class="mdc-button__ripple"></div>
+      <span class="mdc-button__label">Add Pet</span>
+  </button>
+  <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="type" name="type" value = "add">
+</form>
+</div>
+<%- include('footer'); -%>
+
+

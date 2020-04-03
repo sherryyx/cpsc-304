@@ -15,6 +15,43 @@ router.get('/home', function(req, res, next) {
   });
 });
 
+router.get('/myPets', function(req, res, next) {
+  store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+    res.render('myPets', { pets: rows, current_user: current_user });
+  });
+});
+
+router.post('/myPets', function(req, res) {
+  let body = req.body;
+  if (typeof body.type1 !== 'undefined' && body.type !== 'update') { 
+  store.removePet(body.pet_id1, current_user["user_id"]).then(() => {
+    store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+      res.render('myPets', { pets: rows, current_user: current_user });
+    });
+  }).catch((error) => {
+    console.log('Error was caught in delete');
+  });
+} else if (body.type === 'update') {
+  store.updatePetInfo(body["name"],body["careinstructions"], body["dietinstructions"], 
+  body["age"], body["breed"], body["weight"], current_user["user_id"], body["pet_id"]).then(() => {
+    store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+      res.render('myPets', { pets: rows, current_user: current_user });
+    });
+}).catch((error) => {
+  console.log('Error was caught in update');
+})
+} else if (body.type === 'add') {
+  store.createPet(body["pet_id2"], body["name"], body["careinstructions"], body["dietinstructions"], 
+  body["age"], body["breed"], body["weight"], current_user["user_id"]).then(() => {
+    store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+      res.render('myPets', { pets: rows, current_user: current_user });
+    });
+  }).catch((error) => {
+    console.log('Error was caught in add');
+  })
+}
+});
+
 router.get('/signup', function(req, res, next) {
   res.render('signup', {});
 });
@@ -42,7 +79,10 @@ router.get('/searchList', function(req, res, next) {
 });
 
 router.get('/pastBookings', function(req, res, next) {
-  res.render('pastBookings', {});
+  store.getBookingInformation(current_user).then(({rows}) => {
+    console.log(rows);
+    res.render('pastBookings', {bookings: rows, current_user: current_user});
+  });
 });
 
 router.get('/editProfile', function(req, res, next) {
@@ -58,8 +98,13 @@ router.get('/pets', function(req, res, next) {
 });
 
 router.get('/promoCodes', function(req, res, next) {
-  res.render('promoCodes', {});
+  res.render('promoCodes', {promoCodes:[]});
 });
 
+router.put('/promoCodes', function(req, res, next) {
+  store.searchForPromoCode(req.body.promocodestring).then(({rows}) => {
+    res.render('promoCodes', { promoCodes: rows, current_user: current_user })
+})
+});
 
 module.exports = router;

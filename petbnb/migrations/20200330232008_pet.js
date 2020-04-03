@@ -2,6 +2,7 @@
 exports.up = function(knex) {
   return knex.raw(`CREATE TABLE pet (
 	pet_id serial,
+	UNIQUE (pet_id),
 	name text,
 	careInstructions text,
 	dietInstructions text,

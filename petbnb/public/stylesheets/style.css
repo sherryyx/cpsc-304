@@ -26,6 +26,13 @@ h3 {
   font-weight: 700;
 }
 
+h4 {
+  font-size: 18px;
+  color: #4b4b4b;
+  font-weight: 500;
+  margin: 4px 0px 8px 0px;
+}
+
 a {
   color: #00B7FF;
 }
@@ -120,10 +127,11 @@ a {
 }
 
 /* Home page */
-.home-container {
+.container {
   padding: 40px;
 }
-.home-header {
+
+.home-container {
   max-width: 600px;
   margin: auto;
   padding: 32px;
@@ -150,4 +158,28 @@ a {
 .mdc-list a {
   text-decoration: none;
   color: var(--mdc-theme-text-primary-on-background);
+}
+
+/* Past bookings page */
+.bookings-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.booking {
+  padding: 24px;
+  margin: 16px 0px 16px 0px;
+}
+
+.booking h1, .booking h2,.booking p{
+  margin: 0px 0px 4px 0px;
+}
+
+.booking h3 {
+  font-size: 14px;
+  margin: 8px 0px 4px 0px;
 }
