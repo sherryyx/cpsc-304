@@ -1,45 +1,76 @@
+<%- include('header'); -%>
 <!DOCTYPE html>
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <title>Choose what to search</title>
 </head>
+
+            
 <body>
-    <form action="/searchServiceType" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
-    </form>
-    <form action="/searchSitterName" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
-    </form>
-    <form action="/searchPrice" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
-    </form>
-    <form action="/searchDaysAvailable" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
-    </form>
-    <form action="/searchSitterProfile" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
-    </form>
-    <form action="/searchBookService" method="get">
-        <button class="mdc-button">
-            <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label">Log in</span>
-        </button>
-    </form>
+        <form action="/searchResults" method="post">
+            <div class="mdc-form-field">
+                    <div class="mdc-radio">
+                      <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="pricelt" unchecked>
+                      <div class="mdc-radio__background">
+                        <div class="mdc-radio__outer-circle"></div>
+                        <div class="mdc-radio__inner-circle"></div>
+                      </div>
+                      <div class="mdc-radio__ripple"></div>
+                    </div>
+                    <label for="radio-1">Price less than</label>
+                  </div>
+                  <div class="mdc-radio">
+                        <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="pricegt" unchecked>
+                        <div class="mdc-radio__background">
+                          <div class="mdc-radio__outer-circle"></div>
+                          <div class="mdc-radio__inner-circle"></div>
+                        </div>
+                        <div class="mdc-radio__ripple"></div>
+                      </div>
+                      <label for="radio-1">Price greater than</label>
+                    </div>
+                    <div class="mdc-radio">
+                            <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="service" checked>
+                            <div class="mdc-radio__background">
+                              <div class="mdc-radio__outer-circle"></div>
+                              <div class="mdc-radio__inner-circle"></div>
+                            </div>
+                            <div class="mdc-radio__ripple"></div>
+                          </div>
+                          <label for="radio-1">Service type</label>
+                        </div>
+                        <label class="mdc-text-field">
+                                <div class="mdc-text-field__ripple"></div>
+                                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" name="textInput">
+                                <span class="mdc-floating-label" id="my-label-id">Hint text</span>
+                                <div class="mdc-line-ripple"></div>
+                              </label>
+              <button class="mdc-button mdc-button--unelevated" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Submit</span>
+            </button>
+        </form>
+        <form action="/filterGoodSitters" method="GET">
+            <button class="mdc-button mdc-button--unelevated" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Get experienced sitters</span>
+            </button>
+        </form>
+        <form action="/sitterRankings" method="GET">
+            <button class="mdc-button mdc-button--unelevated" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Sitters By Rating</span>
+            </button>
+        </form>
 </body>
+<script> mdc.select.MDCSelect.attachTo(document.querySelector('.mdc-select')); </script>
+
 </html>
+
+
+<%- include('footer'); -%>
