@@ -42,7 +42,10 @@ router.get('/searchList', function(req, res, next) {
 });
 
 router.get('/pastBookings', function(req, res, next) {
-  res.render('pastBookings', {});
+  store.getBookingInformation(current_user).then(({rows}) => {
+    console.log(rows);
+    res.render('pastBookings', {bookings: rows, current_user: current_user});
+  });
 });
 
 router.get('/editProfile', function(req, res, next) {

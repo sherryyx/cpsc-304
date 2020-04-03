@@ -66,7 +66,7 @@ const createServiceAndBooking = (knex, sitter_id, pet_id, owner_id) => {
     VALUES (
         '${faker.finance.amount(12, 60, 2)}',
         '${sitter_id}',
-        '${faker.random.arrayElement(["pet boarding", "pet walking", "drop in visit"])}'
+        '${faker.random.arrayElement(["Pet boarding", "Pet walking", "Drop in visit"])}'
     ) returning service_id;`).then(({rows}) => {
       const service_id = rows[0].service_id;
       return createBooking(knex, service_id, owner_id, pet_id);
@@ -86,7 +86,7 @@ const createReviews = (knex, sitter_id, owner_id) => {
 const createBooking = async (knex, service_id, owner_id, pet_id) => {
   return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
     VALUES (
-      ${faker.finance.amount(0.5, 24, 1)},
+      ${faker.random.arrayElement([0.5, 1, 2, 24, 48])},
       ${service_id},
       ${owner_id},
       ${pet_id}

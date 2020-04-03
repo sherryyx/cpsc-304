@@ -21,8 +21,30 @@ const getPetOwner = ({user_id}) => {
     where user_id = ${user_id};`);
 }
 
+const getBookings = ({user_id}) => {
+    return knex.raw(`SELECT * FROM booking
+    where petOwner_id = ${user_id};`);
+}
+
+const getPetNameGivenID = (pet_id) => {
+    return knex.raw(`SELECT name FROM pet p
+    WHERE p.pet_id = ${pet_id};`);
+}
+
+const getBookingInformation = ({user_id}) => {
+    return knex.raw(`SELECT user_id, booking_id, duration * pricePer as totalPrice, duration, pricePer, booking.service_id, sitterName, petName, serviceType
+    FROM petOwner
+    INNER JOIN booking ON petOwner.user_id = booking.petOwner_id
+    INNER JOIN (SELECT service_id, pricePer, user_id AS sitter_name, serviceType FROM service) AS services ON booking.service_id = services.service_id
+    INNER JOIN (SELECT user_id as sitter_id, name as sitterName FROM petSitter) AS sitterInfo ON sitterInfo.sitter_id = booking.service_id
+    INNER JOIN (SELECT name AS petName, pet_id FROM pet) AS petNames ON petNames.pet_id = booking.pet_id
+    WHERE user_id = ${user_id};
+    `)
+}
+
 module.exports = {
     getPetsOfPetOwner,
     createPetOwner,
-    getPetOwner
+    getPetOwner,
+    getBookingInformation
 };
