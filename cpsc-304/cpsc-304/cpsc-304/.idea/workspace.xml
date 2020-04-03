@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0bd8d233-5bd2-42bf-90d7-aea6d8688549" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/migrations/20200330213838_petOwner.js" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/migrations/20200330213838_petOwner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/migrations/20200330232008_pet.js" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/migrations/20200330232008_pet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/migrations/20200401135128_petSitter.js" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/migrations/20200401135128_petSitter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/views/homepageowner.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/views/homepageowner.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/views/pets.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/views/promoCodes.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/views/promoCodes.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cpsc-304/petbnb/views/upcomingBookings.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/cpsc-304/petbnb/views/upcomingBookings.ejs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/cpsc-304" />
+  </component>
+  <component name="ProjectId" id="1a0osrlbPKP7FZWGAZRpjiMHS4S" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0bd8d233-5bd2-42bf-90d7-aea6d8688549" name="Default Changelist" comment="" />
+      <created>1585882081368</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585882081368</updated>
+      <workItem from="1585882082754" duration="58000" />
+      <workItem from="1585882160104" duration="5000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="265" y="0" key="CommitChangelistDialog2" timestamp="1585882102168">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="265" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585882102168" />
+  </component>
+</project>
