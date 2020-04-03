@@ -83,12 +83,21 @@ const redeemPromoCode = (promoCodeString, user_id) => {
     return knex.raw(`INSERT INTO redeems VALUES ('${promoCodeString}', '${user_id}')`)
 }
 
-// Aggregation Query
+// Regular Aggregation Query
 const averagePetSitterRating = (() => {
     return knex.raw(`SELECT AVG(R.rating)
     FROM review R, petSitter S
     WHERE R.sitteruser_id = S.user_id;`)
 });
+
+// Group By Aggregation Query
+const groupByAveragePetSitterRating = (() => {
+    return knex.raw(`SELECT S.user_id, AVG(R.rating)
+    FROM review R, petSitter S
+    WHERE R.sitteruser_id = S.user_id
+    GROUP BY S.user_id;`)
+});
+
 
 // Filter Services
 const filterServices = ((field, value, sign) => {
@@ -115,5 +124,6 @@ module.exports = {
     getUpcomingBookings,
     redeemPromoCode,
     averagePetSitterRating,
-    filterServices
+    filterServices,
+    groupByAveragePetSitterRating
 };
