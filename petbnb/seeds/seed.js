@@ -71,7 +71,12 @@ const createServiceAndBooking = (knex, sitter_id, pet_id, owner_id) => {
         '${faker.random.arrayElement(["Pet boarding", "Pet walking", "Drop in visit"])}'
     ) returning service_id;`).then(({rows}) => {
       const service_id = rows[0].service_id;
-      return createBooking(knex, service_id, owner_id, pet_id);
+      return createBooking(knex, service_id, owner_id, pet_id).then(() => {
+        return knex.raw(`CREATE VIEW totalPriceOfService AS
+        (SELECT service.service_id as service_id, service.pricePer * booking.duration AS totalPrice
+        FROM service, booking
+        WHERE service.service_id = booking.service_id);`);
+      });
     });
 }
 
@@ -89,7 +94,7 @@ const createPromoCodes = (knex) => {
   let word = "";
   while (true) {
     let t = faker.random.word().split(" ")[0];
-    if (!addedWords.includes(t)) {
+    if (!addedWords.includes(t) && t !== "Pa'anga") {
       addedWords.push(t);
       word = t;
       break;
@@ -103,9 +108,10 @@ const createPromoCodes = (knex) => {
 }
 
 const createBooking = async (knex, service_id, owner_id, pet_id) => {
-  return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
+  return knex.raw(`INSERT INTO booking (duration, totalPrice, service_id, petowner_id, pet_id)
     VALUES (
       ${faker.random.arrayElement([0.5, 1, 2, 24, 48])},
+      ${null},
       ${service_id},
       ${owner_id},
       ${pet_id}
@@ -122,6 +128,13 @@ exports.seed = function(knex) {
         records.push(createPetOwner(knex, i))
       }
 
-      return Promise.all(records);
-    });
-};
+      return Promise.all(records).then(() => {
+        return knex.raw(`SELECT booking_id, totalPriceOfService from totalPriceOfService`).then((row) => {
+          for (let i = 0; i < row.length; i++) {
+            knex.raw(`UPDATE booking SET totalPrice = ${row[i].totalPriceOfService}
+            WHERE service_id = ${row[i]['S.service_id']}`);
+          }
+        })
+      });
+    })
+  };
