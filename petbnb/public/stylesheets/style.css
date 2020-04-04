@@ -375,3 +375,14 @@ a {
   display: flex;
   flex-direction: row;
 }
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filter-field {
+  margin-right: 24px;
+}
