@@ -1,3 +1,52 @@
 <%- include('header'); -%>
-<h1>edit profile</h1>
+<div class="container">
+    <form action="/profile" method="get" class="back-button">
+        <button class="mdc-fab" aria-label="back">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+        </button>
+    </form>
+    <div class="edit-profile-container">
+        <h1>Edit your profile</h1>
+        <div class="margin"></div>
+        <form action="/edit-profile" method="post">
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="full_name" name="full_name" value="<%= current_user.name%>">
+                <span class="mdc-floating-label" id="my-label-id">Name</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="phone_number" name="phone_number" value="<%= current_user.phonenumber%>">
+                <span class="mdc-floating-label" id="my-label-id">Phone number</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="house_number" name="house_number" value="<%= current_user.housenumber%>">
+                <span class="mdc-floating-label" id="my-label-id">House number</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="street_name" name="street_name" value="<%= current_user.street%>">
+                <span class="mdc-floating-label" id="my-label-id">Street name</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                    <div class="mdc-text-field__ripple"></div>
+                    <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="postal_code" name="postal_code" value="<%= current_user.postalcode%>">
+                    <span class="mdc-floating-label" id="my-label-id">Postal code</span>
+                    <div class="mdc-line-ripple"></div>
+                </label>
+            <div class="edit-submit">
+                <button class="mdc-button mdc-button--unelevated">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Save changes</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 <%- include('footer'); -%>

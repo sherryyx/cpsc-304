@@ -130,9 +130,9 @@ router.post('/searchResults', function(req, res, next) {
       res.render('searchResults', {results : results.rows});
     })
   }
-  else if (req.body.column == 'pricels')
+  else if (req.body.column == 'pricelt')
   {
-    store.priceLs(req.body.textInput).then((results) => {
+    store.priceLt(req.body.textInput).then((results) => {
       current_filter = `pricePer < ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
@@ -140,7 +140,7 @@ router.post('/searchResults', function(req, res, next) {
   else if (req.body.column == 'service')
   {
     store.serviceType(req.body.textInput).then((results) => {
-      current_filter = `serviceType = ${req.body.textInput}`
+      current_filter = `serviceType = '` + `${req.body.textInput}` + '\'';
       res.render('searchResults', {results : results.rows});
     })
   }
@@ -148,12 +148,12 @@ router.post('/searchResults', function(req, res, next) {
 
 router.get('/filterGoodSitters', function(req, res, next) {
   store.getExperiencedSitters().then((results) => {
+    console.log(results)
     res.render('searchGoodSitters', {results : results.rows});
   })
 })
 
 router.post('/searchResultsFilter', function(req, res, next) {
-  console.log(req.body)
   let project = ""
   if (req.body.col1 != null)
   {
@@ -184,7 +184,6 @@ router.post('/confirmBookService', function(req, res, next) {
 });
 
 router.get('/searchResults', function(req, res, next) {
-  console.log(req.body)
   res.render('searchResults', {results : []});
 });
 
@@ -200,7 +199,37 @@ router.get('/pastBookings', function(req, res, next) {
   });
 });
 
-// Get pet sitter profile
+// Get pet sitter profile with review input
+router.get('/petsitter-review/:petsitter_id', function(req, res, next) {
+  const petSitter_id = req.params.petsitter_id;
+  store.getPetSitterProfile(petSitter_id).then(({rows}) => {
+    const profileInfo = rows[0];
+    store.getReviewsForSitter(petSitter_id).then(({rows}) => {
+      const reviews = rows;
+      store.getAverageRating(petSitter_id).then(({rows}) => {
+        console.log(rows[0]);
+        let averageRating = rows[0].avg;
+        if (averageRating == null) {
+          averageRating = 'No ratings yet'
+        } else {
+          averageRating = parseFloat(averageRating).toFixed(2);
+        }
+        res.render('sitterProfileReview', {current_user: current_user, profile: profileInfo, reviews: reviews, averageRating: averageRating});
+      });
+    });
+  });
+});
+
+router.post('/petsitter-review/:petsitter_id', function(req, res, next) {
+  const petsitter_id = req.params.petsitter_id;
+  let rating = parseInt(req.body.rating);
+  
+  store.createReview(req.body.user_review, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
+    res.redirect(`/petsitter-review/${petsitter_id}`);
+  });
+});
+
+// Get pet sitter profile without ability to review
 router.get('/petsitter/:petsitter_id', function(req, res, next) {
   const petSitter_id = req.params.petsitter_id;
   store.getPetSitterProfile(petSitter_id).then(({rows}) => {
@@ -209,25 +238,32 @@ router.get('/petsitter/:petsitter_id', function(req, res, next) {
       const reviews = rows;
       store.getAverageRating(petSitter_id).then(({rows}) => {
         console.log(rows[0]);
-        const averageRating = rows[0];
+        let averageRating = rows[0].avg;
+        if (averageRating == null) {
+          averageRating = 'No ratings yet'
+        } else {
+          averageRating = parseFloat(averageRating).toFixed(2);
+        }
         res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: reviews, averageRating: averageRating});
       });
     });
   });
 });
 
-router.post('/petsitter/:petsitter_id', function(req, res, next) {
-  const petsitter_id = req.params.petsitter_id;
-  let rating = parseInt(req.body.rating);
-  
-  store.createReview(req.body.user_review, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
-    res.redirect(`/petsitter/${petsitter_id}`);
-  });
+// View and edit pet owner profile
+router.get('/edit-profile', function(req, res, next) {
+  res.render('editProfile', {current_user: current_user});
 });
 
+router.get('/profile', function(req, res, next) {
+  res.render('profile', {current_user: current_user});
+});
 
-router.get('/editProfile', function(req, res, next) {
-  res.render('editProfile', {});
+router.post('/edit-profile', function(req, res, next) {
+  store.editPetOwner(req.body, current_user["user_id"]).then(({rows}) => {
+    current_user = rows[0];
+    res.redirect('/profile');
+  });
 });
 
 router.get('/promoCodes', function(req, res, next) {

@@ -1,11 +1,11 @@
 <%- include('header'); -%>
+<form action="/home" method="get" class="back-button">
+    <button class="mdc-fab" aria-label="back">
+        <div class="mdc-fab__ripple"></div>
+        <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+    </button>
+</form>
 <div class="container">
-    <form action="/home" method="get" class="back-button">
-        <button class="mdc-fab" aria-label="back">
-            <div class="mdc-fab__ripple"></div>
-            <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
-        </button>
-    </form>
     <div class="pets-container">
         <div class="home-hero">
             <img src="/assets/petting.png" alt="dog" id="dog-gif">
@@ -22,10 +22,10 @@
                 <p><%= pet.dietinstructions%></p>
                 <div class="small-margin"></div>
                 <h3>Age</h3>
-                <p><%= pet.age%></p>
+                <p><%= pet.age%> yrs old</p>
                 <div class="small-margin"></div>
                 <h3>Weight</h3>
-                <p><%= pet.weight%></p>
+                <p><%= pet.weight%> kg</p>
                 <div class="mdc-card__actions">
                     <form action="<%= `/pet/${pet.pet_id}` %>" method="get">
                         <button class="mdc-button mdc-card__action mdc-card__action--button">

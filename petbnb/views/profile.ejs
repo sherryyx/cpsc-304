@@ -1,0 +1,30 @@
+<%- include('header'); -%>
+<div class="container">
+    <div class="profile-container">
+        <form action="/home" method="get" class="back-button">
+            <button class="mdc-fab" aria-label="back">
+                <div class="mdc-fab__ripple"></div>
+                <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+            </button>
+        </form>
+        <div class="home-hero">
+            <img src="/assets/dog-jump.svg" alt="dog" id="dog-gif">
+        </div>
+        <h1><%=current_user.name %></h1>
+        <h3>Phone number</h3>
+        <p><%=current_user.phonenumber %></p>
+        <h3>House number</h3>
+        <p><%=current_user.housenumber %></p>
+        <h3>Street name</h3>
+        <p><%=current_user.street %></p>
+        <h3>Postal code</h3>
+        <p><%=current_user.postalcode %></p>
+        <form action="/edit-profile" method="get">
+            <button class="mdc-button mdc-card__action mdc-card__action--button">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Edit profile</span>
+            </button>
+        </form>
+    </div>
+</div>
+<%- include('footer'); -%>

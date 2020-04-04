@@ -1,5 +1,11 @@
 <%- include('header'); -%>
 <div class="container">
+    <form action="/login" method="get">
+        <button class="mdc-button mdc-button--unelevated log-out">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label">Sign out</span>
+        </button>
+    </form>
     <div class="home-container">
         <div class="home-hero">
             <img src="/assets/doggie.gif" alt="dog" id="dog-gif">
@@ -18,7 +24,7 @@
                 </li>
             </a>
             <li role="separator" class="mdc-list-divider"></li>
-            <a href="/editProfile">
+            <a href="/profile">
                 <li class="mdc-list-item">
                     <span class="mdc-list-item__text">
                         <span class="mdc-list-item__primary-text">Edit profile</span>

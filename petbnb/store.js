@@ -6,7 +6,7 @@ const getPetsOfPetOwner = (petowner_id) => {
     WHERE p.user_id = ${petowner_id};`);
 }
 
-const createPetOwner = ({full_name, email_address, phone_number, house_number, street_name, postal_code, user_type}) => {
+const createPetOwner = ({full_name, phone_number, house_number, street_name, postal_code}) => {
     return knex.raw(`INSERT INTO petOwner (phonenumber, name, housenumber, street, postalcode)
     VALUES (
       '${phone_number}',
@@ -42,6 +42,18 @@ const getBookingInformation = ({user_id}) => {
     WHERE user_id = ${user_id};
     `)
 }                                        
+const editPetOwner = ({full_name, phone_number, house_number, street_name, postal_code}, user_id) => {
+    return knex.raw(`UPDATE petOwner SET
+    name = '${full_name}',
+    phonenumber = ${phone_number},
+    housenumber = ${house_number},
+    street = '${street_name}',
+    postalcode = '${postal_code}'
+    WHERE user_id = ${user_id}
+    returning *;`);
+}
+
+// Pet queries
 
 const createPet = ({name, careInstructions, dietInstructions, age, breed, weight}, user_id) => {
     return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
@@ -165,7 +177,7 @@ const priceLt = (textInput) => {
 }
 
 const serviceType = (textInput) => {
-    return knex.raw(`SELECT * FROM service WHERE serviceType = ${textInput};`);
+    return knex.raw(`SELECT * FROM service WHERE serviceType = '${textInput}';`);
 }
 
 const getExperiencedSitters = () => {
@@ -222,5 +234,6 @@ module.exports = {
     serviceType,
     getExperiencedSitters,
     insertBooking,
-    getPetInfo
-};
+    getPetInfo,
+    editPetOwner
+}
