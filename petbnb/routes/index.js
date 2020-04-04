@@ -72,12 +72,12 @@ router.post('/searchResults', function(req, res, next) {
 
 router.get('/filterGoodSitters', function(req, res, next) {
   store.getExperiencedSitters().then((results) => {
+    console.log(results)
     res.render('searchGoodSitters', {results : results.rows});
   })
 })
 
 router.post('/searchResultsFilter', function(req, res, next) {
-  console.log(req.body)
   let project = ""
   if (req.body.col1 != null)
   {
@@ -116,7 +116,6 @@ router.post('/confirmBookService', function(req, res, next) {
 });
 
 router.get('/searchResults', function(req, res, next) {
-  console.log(req.body)
   res.render('searchResults', {results : []});
 });
 
@@ -140,7 +139,6 @@ router.get('/petsitter/:petsitter_id', function(req, res, next) {
     store.getReviewsForSitter(petSitter_id).then(({rows}) => {
       const reviews = rows;
       store.getAverageRating(petSitter_id).then(({rows}) => {
-        console.log(rows[0]);
         const averageRating = rows[0];
         res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: reviews, averageRating: averageRating});
       });
@@ -149,7 +147,6 @@ router.get('/petsitter/:petsitter_id', function(req, res, next) {
 });
 
 router.post('/petsitter/:petsitter_id', function(req, res, next) {
-  console.log(req.body);
   const petsitter_id = req.params.petsitter_id;
   let rating = parseInt(req.body.rating);
   
