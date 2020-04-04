@@ -21,7 +21,8 @@ const createPet = async (knex, owner_id) => {
       let records = [];
 
       records.push(createServiceAndBooking(knex, sitter_id, pet_id, owner_id));
-
+      records.push(createReviews(knex, sitter_id, owner_id));
+      
       return Promise.all(records);
     });
   });  
