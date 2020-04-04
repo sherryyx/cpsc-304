@@ -4,6 +4,7 @@ exports.up = function(knex) {
         booking_id serial,
         totalPrice float,
         duration float,
+        totalPrice float,
         service_id integer NOT NULL,
         petOwner_id integer NOT NULL,
         pet_id integer NOT NULL,
