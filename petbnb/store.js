@@ -80,7 +80,7 @@ const redeemPromoCode = (promoCodeString, user_id) => {
 // Booking queries 
 
 const getBookingInformation = ({user_id}) => {
-    return knex.raw(`SELECT user_id, sitter_id, booking_id, duration * pricePer as totalPrice, duration, pricePer, booking.service_id, sitterName, petName, serviceType
+    return knex.raw(`SELECT user_id, sitter_id, booking_id, duration, pricePer, booking.service_id, sitterName, petName, serviceType, totalPrice
     FROM petOwner
     INNER JOIN booking ON petOwner.user_id = booking.petOwner_id
     INNER JOIN (SELECT service_id, pricePer, user_id AS sitter_name, serviceType FROM service) AS services ON booking.service_id = services.service_id
