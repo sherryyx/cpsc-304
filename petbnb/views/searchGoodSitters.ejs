@@ -17,7 +17,7 @@
                 </thead>
                 <tbody class="mdc-data-table__content">
                   <% for(var i=0; i<results.length; i++) {%>
-                    <form action="/getProfile" method="post" class="form-container">
+                    <form action="<%= `/petsitter/${results[i].user_id}` %>" method="get" class="form-container">
                       <tr class="mdc-data-table__row">
                         <td class="mdc-data-table__cell"><%= results[i].user_id %></td>
                         <td class="mdc-data-table__cell">
