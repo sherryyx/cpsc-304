@@ -274,7 +274,6 @@ router.get('/promoCodes', function(req, res, next) {
 });
 
 router.post('/promoCodes', function(req, res, next) {
-  console.log(32812031093801);
   console.log(req.body);
   store.searchForPromoCode(req.body.promoCode).then(({rows}) => {
     let promo = rows[0];

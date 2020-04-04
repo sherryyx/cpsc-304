@@ -98,7 +98,7 @@ a {
   margin-bottom: 16px;
 }
 
-.mdc-form-field {
+.form-container .mdc-form-field {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -148,7 +148,7 @@ a {
 }
 
 .home-hero {
-  height: 200px;
+  height: 240px;
 }
 
 .home-header h1 {
@@ -364,4 +364,45 @@ a {
 .edit-profile-container .mdc-text-field {
   width: 80%;
   margin-bottom: 24px;
+}
+
+/** searchList **/ 
+.filter-container {
+  padding: 32px 0px 24px 0px;
+}
+
+.radio-container .mdc-form-field {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filter-field {
+  margin-right: 24px;
+}
+
+.mdc-form-field {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.filter-columns {
+  margin-bottom: 32px;
+}
+
+.data-container {
+  display: flex;
+  justify-content: center;
+}
+
+.table-container {
+  max-width: 700px;
+  margin: auto;
 }

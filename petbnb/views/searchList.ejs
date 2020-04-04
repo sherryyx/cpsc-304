@@ -1,82 +1,98 @@
 <%- include('header'); -%>
-<!DOCTYPE html>
-<head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Choose what to search</title>
-</head>
-<body>
-    <div class="home-container" >
-            <h2> Find our best petsitters</h2>
-        </form>
-        <form action="/filterGoodSitters" method="GET">
-            <button class="mdc-button mdc-button--unelevated" type="submit">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Get experienced sitters</span>
-            </button>
-        </form>
-        <form action="/sitterRankings" method="GET">
-            <button class="mdc-button mdc-button--unelevated" type="submit">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Pet Sitter Average Ratings</span>
-            </button>
-        </form>
-    <h2>
-         Or Choose the service you want to filter by:
-    </h2>
-        
-        <form action="/searchResults" method="post">
-            <div class="container" style="width : 2000px">
-            <div class="mdc-form-field">
-                    <div class="mdc-radio">
-                      <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="pricelt" unchecked>
-                      <div class="mdc-radio__background">
-                        <div class="mdc-radio__outer-circle"></div>
-                        <div class="mdc-radio__inner-circle"></div>
-                      </div>
-                      <div class="mdc-radio__ripple"></div>
-                    </div>
-                    <label for="radio-1">Price less than</label>
-                  </div>
-                  <div class="mdc-form-field">
-                  <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="pricegt" unchecked>
-                        <div class="mdc-radio__background">
-                          <div class="mdc-radio__outer-circle"></div>
-                          <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
-                      </div>
-                      <label for="radio-1">Price greater than</label>
-                    </div>
-                    <div class="mdc-form-field">
-                    <div class="mdc-radio">
-                            <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="service" checked>
-                            <div class="mdc-radio__background">
-                              <div class="mdc-radio__outer-circle"></div>
-                              <div class="mdc-radio__inner-circle"></div>
-                            </div>
-                            <div class="mdc-radio__ripple"></div>
-                        
-                          <label for="radio-1">Service type</label>
-                        </div>
-                        <div>
+<div class="container">
+  <form action="/home" method="get" class="back-button">
+    <button class="mdc-fab" aria-label="back">
+        <div class="mdc-fab__ripple"></div>
+        <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+    </button>
+  </form>
+  <div class="home-container" >
+      <h1>Find a pet sitter</h1>
+      <h2>Choose from our best pet sitters</h2>
+      <ul class="mdc-list mdc-list--two-line">
+          <li role="separator" class="mdc-list-divider"></li>
+          <a href="/filterGoodSitters">
+            <li class="mdc-list-item" tabindex="0">
+                <span class ="mdc-list-item__graphic material-icons">favorite</span>
+                <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">Find the most experienced sitters</span>
+                <span class="mdc-list-item__secondary-text">Our experienced sitters are the most frequently reviewed</span>
+                </span>
+            </li>
+          </a>
+          <li role="separator" class="mdc-list-divider"></li>
+          <a href="/sitterRankings">
+            <li class="mdc-list-item" tabindex="0">
+                <span class ="mdc-list-item__graphic material-icons">star</span>
+                <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">Find the highest rated sitters</span>
+                <span class="mdc-list-item__secondary-text">Book a service with a highly-rated pet sitter</span>
+                </span>
+            </li>
+          </a>
+          <li role="separator" class="mdc-list-divider"></li>
+      </ul>
 
-                        <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-                                <div class="mdc-text-field__ripple"></div>
-                                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="phone_number" name="textInput">
-                                <span class="mdc-floating-label" id="my-label-id">Insert value </span>
-                                <div class="mdc-line-ripple"></div>
-                        </label>
-                    </div>
-                              </div>
+      <div class="filter-container">
+        <h2>Search for pet sitters that fit your needs</h2>
+          <form action="/searchResults" method="post">
+          <div class="radio-container">
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="pricelt" unchecked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="radio-1">Price/hr less than...</label>
+              </div>
+          </div>
+          <div class="radio-container">
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="pricegt" unchecked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="radio-1">Price/hr greater than...</label>
+              </div>
+          </div>
+          <div class="radio-container">
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" type="radio" id="radio-1" name="column" value="service" checked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="radio-1">Service type (Pet walking, Pet boarding, or Drop in visit)</label>
+              </div>
+          </div>
+          <div class="margin"></div>
+          <div class="input-container">
+              <label class="mdc-text-field filter-field" data-mdc-auto-init="MDCTextField">
+                  <div class="mdc-text-field__ripple"></div>
+                  <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="phone_number" name="textInput">
+                  <span class="mdc-floating-label" id="my-label-id">Enter here</span>
+                  <div class="mdc-line-ripple"></div>
+              </label>
               <button class="mdc-button mdc-button--unelevated" type="submit">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Submit</span>
-            </button>
-        </div>
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label">Submit</span>
+              </button>
+          </div>
+        </form>
+      </div>
     </div>
-</body>
-</html>
+  </div>
+</div>
 <%- include('footer'); -%>
