@@ -1,19 +1,13 @@
 <%- include('header'); -%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Results</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+  <div class="container">
       <form action="/searchResults" method="get" class="back-button">
         <button class="mdc-fab" aria-label="back">
             <div class="mdc-fab__ripple"></div>
             <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
         </button>
       </form>
-      <div class="home-container" >
-      <section class="home">
+      <div class="table-container" >
+      <section class="data-container">
           <div class="mdc-data-table">
               <table class="mdc-data-table__table" aria-label="Dessert calories">
                 <thead>
@@ -48,6 +42,5 @@
             </div>
       </section>
       </div>
-  </body>
-</html>
+    </div>
 <%- include('footer'); -%>

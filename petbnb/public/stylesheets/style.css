@@ -396,3 +396,13 @@ a {
 .filter-columns {
   margin-bottom: 32px;
 }
+
+.data-container {
+  display: flex;
+  justify-content: center;
+}
+
+.table-container {
+  max-width: 700px;
+  margin: auto;
+}
