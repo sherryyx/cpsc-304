@@ -99,14 +99,6 @@ router.post('/searchResultsFilter', function(req, res, next) {
   })
 })
 
-router.post('/getProfile', function(req, res, next) {
-  store.getPetSitterProfile(req.body.user_id).then((result) => {
-    store.getReviewsForSitter(req.body.user_id).then((results) => {
-      res.render('sitterProfile', {profile : result.rows, reviews : results.rows});
-    })
-  })
-});
-
 router.post('/confirmBookService', function(req, res, next) {
   let pet_id = 1;
     store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], pet_id).then((results) => {
