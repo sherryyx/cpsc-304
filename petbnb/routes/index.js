@@ -93,9 +93,9 @@ router.post('/searchResults', function(req, res, next) {
       res.render('searchResults', {results : results.rows});
     })
   }
-  else if (req.body.column == 'pricels')
+  else if (req.body.column == 'pricelt')
   {
-    store.priceLs(req.body.textInput).then((results) => {
+    store.priceLt(req.body.textInput).then((results) => {
       current_filter = `pricePer < ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
@@ -103,7 +103,7 @@ router.post('/searchResults', function(req, res, next) {
   else if (req.body.column == 'service')
   {
     store.serviceType(req.body.textInput).then((results) => {
-      current_filter = `serviceType = ${req.body.textInput}`
+      current_filter = `serviceType = ' + ${req.body.textInput}` + '';
       res.render('searchResults', {results : results.rows});
     })
   }

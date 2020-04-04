@@ -146,7 +146,7 @@ const priceLt = (textInput) => {
 }
 
 const serviceType = (textInput) => {
-    return knex.raw(`SELECT * FROM service WHERE serviceType = ${textInput};`);
+    return knex.raw(`SELECT * FROM service WHERE serviceType = '${textInput}';`);
 }
 
 const getExperiencedSitters = () => {
