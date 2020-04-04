@@ -41,11 +41,7 @@ const getBookingInformation = ({user_id}) => {
     INNER JOIN (SELECT name AS petName, pet_id FROM pet) AS petNames ON petNames.pet_id = booking.pet_id
     WHERE user_id = ${user_id};
     `)
-}
-
-const removePet = (pet_id, user_id) => {
-    return knex.raw(`DELETE FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
-}                                               
+}                                        
 
 const searchForPromoCode = (promoCodeString) => {
     return knex.raw(`SELECT * FROM promoCode WHERE promocodestring = '${promoCodeString}';`);
