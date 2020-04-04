@@ -82,7 +82,8 @@ router.get('/searchList', function(req, res, next) {
 });
 
 router.post('/bookService', function(req, res, next) {
-  res.render('bookService', {service_id : req.body.service_id, user_id : req.body.user_id});
+  console.log(req.body)
+  res.render('bookService', {service_id : req.body.service_id, name : req.body.name, service_type: req.body.servicetype});
 });
 
 router.post('/searchResults', function(req, res, next) {
