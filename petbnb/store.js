@@ -172,8 +172,8 @@ const getSitterRanking = () => {
 }
 
 const insertBooking = (time, service_id, user_id, pet_id) => {
-    return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
-    VALUES ( ${time}, ${service_id}, ${user_id}, ${pet_id});`);
+    return knex.raw(`SELECT pet_id FROM pet;`).then((rows) => {console.log(rows);knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
+    VALUES ( ${time}, ${service_id}, ${user_id}, ${rows.rows[0].pet_id});`)});
 }
 
 module.exports = {
