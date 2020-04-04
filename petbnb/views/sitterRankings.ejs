@@ -21,7 +21,7 @@
                     <form action="/getProfile" method="post" class="form-container">
                       <tr class="mdc-data-table__row">
                         <td class="mdc-data-table__cell"><%= results[i].user_id %></td>
-                        <td class="mdc-data-table__cell"><%= results[i].avg %></td>
+                        <td class="mdc-data-table__cell"><%= parseFloat(results[i].avg).toFixed(2) %></td>
                         <td class="mdc-data-table__cell">
                         <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="user_id" value = <%= results[i].user_id %>>
                         <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="servicetype" value = <%= results[i].avg %>>

@@ -1,7 +1,10 @@
 var faker = require('faker');
 
-const createPet = (knex, owner_id) => { 
-  return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
+let arr1 = [];
+let arr2 = [];
+
+const createPet = async (knex, owner_id) => { 
+  return await knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
   VALUES(
     '${faker.name.firstName().replace("'", "''")}',
     'Play fetch twice an hour',
@@ -10,23 +13,22 @@ const createPet = (knex, owner_id) => {
     '${faker.random.arrayElement(["Chihuahua", "Domestic Short Hair Cat", "Husky", "Hairless Cat", "Labradoodle"])}',
     ${faker.finance.amount(5, 20, 1)},
     ${owner_id}
-  ) returning pet_id;`).then(({rows}) => {
+  ) returning pet_id;`).then(async ({rows}) => {
     const pet_id = rows[0].pet_id;
     return createPetSitter(knex).then(({rows}) => {
       const sitter_id = rows[0].user_id;
-
+      arr2.push(sitter_id);
       let records = [];
 
       records.push(createServiceAndBooking(knex, sitter_id, pet_id, owner_id));
-      records.push(createReviews(knex, sitter_id, owner_id));
 
       return Promise.all(records);
     });
   });  
 }
 
-const createPetOwner = (knex, id) => {
-  return knex.raw(`INSERT INTO petOwner (phonenumber, name, housenumber, street, postalcode)
+const createPetOwner = async (knex, id) => {
+  return await knex.raw(`INSERT INTO petOwner (phonenumber, name, housenumber, street, postalcode)
   VALUES (
     '${faker.phone.phoneNumber()}',
     '${faker.name.findName().replace("'", "''")}',
@@ -37,7 +39,7 @@ const createPetOwner = (knex, id) => {
     let records = [];
 
     const owner_id = rows[0].user_id;
-
+    arr1.push(owner_id);
     for (let i = 0; i < 2; i++) {
       records.push(createPet(knex, owner_id));
     }
@@ -49,8 +51,8 @@ const createPetOwner = (knex, id) => {
 }
 
 // Create petSitter, associated services, and reviews
-const createPetSitter = (knex) => {
-  return knex.raw(`INSERT INTO petsitter (phonenumber, name, bio, housenumber, street, postalcode)
+const createPetSitter = async (knex) => {
+  return await knex.raw(`INSERT INTO petsitter (phonenumber, name, bio, housenumber, street, postalcode)
   VALUES (
     '${faker.phone.phoneNumber()}',
     '${faker.name.findName().replace("'", "''")}',
@@ -93,14 +95,28 @@ const createBooking = async (knex, service_id, owner_id, pet_id) => {
     )`);
 }
 
-exports.seed = function(knex) {
+exports.seed = (knex) => {
   // Deletes ALL existing entries
   return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking;`)
-    .then(function () {
+    .then(async () => {
       let records = [];
 
       for (let i = 1; i <= 35; i++) {
         records.push(createPetOwner(knex, i))
+      }
+
+      await Promise.all(records);
+
+      var e = new Date().getTime() + (3000);
+      while (new Date().getTime() <= e) {}
+      
+      console.log(arr2)
+      for(i = 0; i < arr1.length; i++)
+      {
+        for (j = 0; j < 5; j++)
+        {
+          records.push(createReviews(knex, arr2[j], arr1[i]));
+        }
       }
 
       return Promise.all(records);
