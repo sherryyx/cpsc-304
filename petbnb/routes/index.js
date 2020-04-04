@@ -103,7 +103,7 @@ router.post('/searchResults', function(req, res, next) {
   else if (req.body.column == 'service')
   {
     store.serviceType(req.body.textInput).then((results) => {
-      current_filter = `serviceType = ' + ${req.body.textInput}` + '';
+      current_filter = `serviceType = '` + `${req.body.textInput}` + '\'';
       res.render('searchResults', {results : results.rows});
     })
   }
@@ -111,12 +111,12 @@ router.post('/searchResults', function(req, res, next) {
 
 router.get('/filterGoodSitters', function(req, res, next) {
   store.getExperiencedSitters().then((results) => {
+    console.log(results)
     res.render('searchGoodSitters', {results : results.rows});
   })
 })
 
 router.post('/searchResultsFilter', function(req, res, next) {
-  console.log(req.body)
   let project = ""
   if (req.body.col1 != null)
   {
@@ -147,7 +147,6 @@ router.post('/confirmBookService', function(req, res, next) {
 });
 
 router.get('/searchResults', function(req, res, next) {
-  console.log(req.body)
   res.render('searchResults', {results : []});
 });
 
