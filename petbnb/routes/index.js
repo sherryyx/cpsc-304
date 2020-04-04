@@ -193,10 +193,6 @@ router.get('/editProfile', function(req, res, next) {
   res.render('editProfile', {});
 });
 
-router.get('/upcomingBookings', function(req, res, next) {
-  res.render('upcomingBookings', {});
-});
-
 router.get('/promoCodes', function(req, res, next) {
   res.render('promoCodes', {});
 });
