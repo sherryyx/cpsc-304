@@ -21,7 +21,7 @@ const getPetOwner = ({user_id}) => {
     where user_id = ${user_id};`);
 }
 
-const getBookings = ({user_id}) => {
+const getBookings = (user_id) => {
     return knex.raw(`SELECT * FROM booking
     where petOwner_id = ${user_id};`);
 }
@@ -98,7 +98,6 @@ const groupByAveragePetSitterRating = (() => {
     GROUP BY S.user_id;`)
 });
 
-
 // Filter Services
 const filterServices = ((field, value, sign) => {
     if (field === 'pricePer') {
@@ -110,6 +109,13 @@ const filterServices = ((field, value, sign) => {
         FROM service
         WHERE serviceType = ${value}` );
     }
+})
+
+const applyPromoCode = ((booking_id, promocodestring,value) => {
+    return knex.raw(`INSERT INTO applyTo VALUES ('${promocodestring}', ${booking_id});
+    UPDATE booking 
+    SET totalPrice = totalPrice - ${value}
+    WHERE booking_id = ${booking_id}`)
 })
 
 module.exports = {
@@ -125,5 +131,7 @@ module.exports = {
     redeemPromoCode,
     averagePetSitterRating,
     filterServices,
-    groupByAveragePetSitterRating
+    groupByAveragePetSitterRating,
+    applyPromoCode,
+    getBookings
 };

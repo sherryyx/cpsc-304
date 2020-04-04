@@ -98,15 +98,24 @@ router.get('/pets', function(req, res, next) {
 });
 
 router.get('/promoCodes', function(req, res, next) {
-  res.render('promoCodes', {code:[]});
+  store.getBookings(current_user["user_id"]).then((rows) => {
+    console.log(rows.rows);
+    res.render('promoCodes', {bookings:rows.rows});
+  })
 });
 
 router.post('/promoCodes', function(req, res, next) {
+  console.log(32812031093801);
   console.log(req.body);
   store.searchForPromoCode(req.body.promoCode).then(({rows}) => {
-    console.log(rows[0]);
-    store.redemPromoCode(rows[0].promocodestring, current_user["user_id"]).then(() => {
-      res.render('promoCodes', {})
+    let promo = rows[0];
+    store.redeemPromoCode(promo.promocodestring, current_user["user_id"]).then(() => {
+      store.applyPromoCode(req.body.booking_id, promo.promocodestring, promo.value).then(() => {
+        store.getBookings(current_user["user_id"]).then((rows) => {
+          console.log(rows.rows);
+          res.render('promoCodes', {bookings:rows.rows, applied: 1});
+        })
+      })
     })
 })
 });

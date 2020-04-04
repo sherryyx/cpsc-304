@@ -1,4 +1,5 @@
 var faker = require('faker');
+let addedWords = [];
 
 const createPet = (knex, owner_id) => { 
   return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
@@ -19,6 +20,7 @@ const createPet = (knex, owner_id) => {
 
       records.push(createServiceAndBooking(knex, sitter_id, pet_id, owner_id));
       records.push(createReviews(knex, sitter_id, owner_id));
+      records.push(createPromoCodes(knex));
 
       return Promise.all(records);
     });
@@ -83,6 +85,23 @@ const createReviews = (knex, sitter_id, owner_id) => {
   )`);
 }
 
+const createPromoCodes = (knex) => {
+  let word = "";
+  while (true) {
+    let t = faker.random.word().split(" ")[0];
+    if (!addedWords.includes(t)) {
+      addedWords.push(t);
+      word = t;
+      break;
+    }
+  }
+  return knex.raw(`INSERT INTO promoCode (value, promocodestring)
+  VALUES (
+    '${faker.random.number({min: 1, max: 15})}',
+    '${word}'
+  )`);
+}
+
 const createBooking = async (knex, service_id, owner_id, pet_id) => {
   return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
     VALUES (
@@ -95,7 +114,7 @@ const createBooking = async (knex, service_id, owner_id, pet_id) => {
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking;`)
+  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking; DELETE FROM promoCode`)
     .then(function () {
       let records = [];
 

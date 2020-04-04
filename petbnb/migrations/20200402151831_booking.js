@@ -2,6 +2,7 @@
 exports.up = function(knex) {
     return knex.raw(`CREATE TABLE booking (
         booking_id serial,
+        totalPrice integer,
         duration float,
         service_id integer NOT NULL,
         petOwner_id integer NOT NULL,

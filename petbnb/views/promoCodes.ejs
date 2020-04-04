@@ -1,17 +1,25 @@
 <%- include('header'); -%>
-<form action="/promoCodes" method="POST" class="form-container">
+<form action="/promoCodes" method="POST" class="form-container" id = "promoForm">
   <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
       <div class="mdc-text-field__ripple"></div>
       <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="promoCode" name="promoCode">
       <span class="mdc-floating-label" id="my-label-id">PromoCode</span>
       <div class="mdc-line-ripple"></div>
   </label>
-
+  <select id="booking_id" name="booking_id" form="promoForm">
+    <% for (let b of bookings)  { %>
+      <option><%= b['booking_id'] %></option>
+      <% } %>
+  </select>
   <button class="mdc-button mdc-button--unelevated">
       <div class="mdc-button__ripple"></div>
       <span class="mdc-button__label">REEDEM</span>
   </button>
 </form>
+
+<%if (typeof applied !== 'undefined') { %>
+  Promo Code Applied Successfully
+  <% } %>
 <%- include('footer'); -%>
 
 
