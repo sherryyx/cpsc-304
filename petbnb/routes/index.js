@@ -172,7 +172,12 @@ router.get('/petsitter/:petsitter_id', function(req, res, next) {
       const reviews = rows;
       store.getAverageRating(petSitter_id).then(({rows}) => {
         console.log(rows[0]);
-        const averageRating = rows[0];
+        let averageRating = rows[0].avg;
+        if (averageRating == null) {
+          averageRating = 'No ratings yet'
+        } else {
+          averageRating = parseFloat(averageRating).toFixed(2);
+        }
         res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: reviews, averageRating: averageRating});
       });
     });
