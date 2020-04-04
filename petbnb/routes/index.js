@@ -89,6 +89,7 @@ router.post('/searchResults', function(req, res, next) {
   if (req.body.column == 'pricegt')
   {
     store.priceGt(req.body.textInput).then((results) => {
+      console.log(results.rows);
       current_filter = `pricePer > ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
@@ -111,7 +112,7 @@ router.post('/searchResults', function(req, res, next) {
 
 router.get('/filterGoodSitters', function(req, res, next) {
   store.getExperiencedSitters().then((results) => {
-    console.log(results)
+    // console.log(results)
     res.render('searchGoodSitters', {results : results.rows});
   })
 })
@@ -120,7 +121,7 @@ router.post('/searchResultsFilter', function(req, res, next) {
   let project = ""
   if (req.body.col1 != null)
   {
-    project = 'service_id'
+    project = 'name'
   }
   if (req.body.col2 != null)
   {
@@ -128,14 +129,21 @@ router.post('/searchResultsFilter', function(req, res, next) {
   }
   if (req.body.col3 != null)
   {
-    project = project == "" ? 'user_id' : project + ', ' + 'user_id'
-  }
-  if (req.body.col4 != null)
-  {
     project = project == "" ? 'servicetype' : project + ', ' + 'servicetype'
   }
-  store.sortSearchResults(project, current_filter).then((results) => {
-    res.render('searchResultsFilter', {results : results.rows});
+  store.sortSearchResults(project, current_filter).then(({rows}) => {
+    const columns = Object.keys(rows[0]);
+    const col_to_display = {
+      name: "Name",
+      priceper: "Price/hr",
+      servicetype: "Service type"
+    };
+    const columns_to_display = columns.map((col) => col_to_display[col]);
+    res.render('searchResultsFilter', {
+      results : rows, 
+      columns_to_display: columns_to_display,
+      columns: columns
+    });
   })
 })
 

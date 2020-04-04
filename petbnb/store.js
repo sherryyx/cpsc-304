@@ -149,15 +149,21 @@ const filterServices = ((field, value, sign) => {
 })
 
 const priceGt = (textInput) => {
-    return knex.raw(`SELECT * FROM service WHERE pricePer > ${textInput};`);
+    return knex.raw(`SELECT service_id, priceper, ps.user_id, serviceType, name FROM service
+    JOIN petSitter AS ps ON service.user_id = ps.user_id
+    WHERE pricePer > ${textInput};`);
 }
 
 const priceLt = (textInput) => {
-    return knex.raw(`SELECT * FROM service WHERE pricePer < ${textInput};`);
+    return knex.raw(`SELECT service_id, priceper, ps.user_id, serviceType, name FROM service
+    JOIN petSitter AS ps ON service.user_id = ps.user_id
+    WHERE pricePer < ${textInput};`);
 }
 
 const serviceType = (textInput) => {
-    return knex.raw(`SELECT * FROM service WHERE serviceType = '${textInput}';`);
+    return knex.raw(`SELECT service_id, priceper, ps.user_id, serviceType, name FROM service
+    JOIN petSitter AS ps ON service.user_id = ps.user_id
+    WHERE serviceType = '${textInput}';`);
 }
 
 const getExperiencedSitters = () => {
@@ -172,7 +178,9 @@ const getExperiencedSitters = () => {
 }
 
 const sortSearchResults = (project, current_filter) => {
-    return knex.raw(`SELECT ${project} FROM service WHERE ${current_filter};`);
+    return knex.raw(`SELECT ${project} FROM service
+    JOIN petSitter AS ps ON service.user_id = ps.user_id
+    WHERE ${current_filter};`);
 }
 
 const getSitterRanking = () => {
