@@ -1,0 +1,47 @@
+<%- include('header'); -%>
+<div class="container">
+    <form action="/home" method="get" class="back-button">
+        <button class="mdc-fab" aria-label="back">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+        </button>
+    </form>
+    <div class="pets-container">
+        <div class="home-hero">
+            <img src="/assets/petting.png" alt="dog" id="dog-gif">
+        </div>
+        <h1>Your pets</h1>
+        <% pets.forEach(function (pet) { %>
+            <div class="mdc-card pet-card">
+                <h2 class="pet-header"><%= pet.name%>, <span class="pet-breed"><%= pet.breed%></span></h2>
+                <div class="margin"></div>
+                <h3>Care instructions</h3>
+                <p><%= pet.careinstructions%></p>
+                <div class="small-margin"></div>
+                <h3>Diet instructions</h3>
+                <p><%= pet.dietinstructions%></p>
+                <div class="small-margin"></div>
+                <h3>Age</h3>
+                <p><%= pet.age%></p>
+                <div class="small-margin"></div>
+                <h3>Weight</h3>
+                <p><%= pet.weight%></p>
+                <div class="mdc-card__actions">
+                    <form action="<%= `/pet/${pet.pet_id}` %>" method="get">
+                        <button class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Edit</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+    <form action="/create-pet" method="get" class="floating-button">
+        <button class="mdc-fab add-button" aria-label="Favorite">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">add</span>
+        </button>
+    </form>
+</div>
+<%- include('footer'); -%>

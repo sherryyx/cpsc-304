@@ -74,27 +74,160 @@ router.post('/login', function(req, res, next) {
   })
 });
 
+// Get pets view
+router.get('/pets', function(req, res, next) {
+  store.getPetsOfPetOwner(current_user["user_id"]).then(({rows}) => {
+    res.render('Pets', { pets: rows, current_user: current_user });
+  });
+});
+
+router.get('/pet/:pet_id', function(req, res, next) {
+  const pet_id = req.params.pet_id;
+  store.getPetInfo(pet_id, current_user["user_id"]).then(({rows}) => {
+    const pet = rows[0];
+    res.render('editPet', { pet: pet});
+  });
+});
+
+router.post('/pet/:pet_id', function(req, res, next) {
+  const pet_id = req.params.pet_id;
+  store.updatePetInfo(req.body, current_user["user_id"], pet_id).then(() => {
+    res.redirect('/pets');
+  });
+});
+
+router.get('/remove-pet/:pet_id', function(req, res, next) {
+  const pet_id = req.params.pet_id;
+  store.removePet(pet_id, current_user["user_id"]).then(() => {
+    res.redirect('/pets');
+  });
+});
+
+router.get('/create-pet', function(req, res, next) {
+  res.render('createPet', {});
+});
+
+router.post('/pets', function(req, res, next) {
+  store.createPet(req.body, current_user["user_id"]).then(() => {
+    res.redirect('/pets');
+  });
+});
+
+
 router.get('/searchList', function(req, res, next) {
-  res.render('searchList', {});
+  res.render('searchList')
+});
+
+router.post('/bookService', function(req, res, next) {
+  res.render('bookService', {service_id : req.body.service_id, user_id : req.body.user_id});
+});
+
+router.post('/searchResults', function(req, res, next) {
+  if (req.body.column == 'pricegt')
+  {
+    store.priceGt(req.body.textInput).then((results) => {
+      current_filter = `pricePer > ${req.body.textInput}`
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+  else if (req.body.column == 'pricels')
+  {
+    store.priceLs(req.body.textInput).then((results) => {
+      current_filter = `pricePer < ${req.body.textInput}`
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+  else if (req.body.column == 'service')
+  {
+    store.serviceType(req.body.textInput).then((results) => {
+      current_filter = `serviceType = ${req.body.textInput}`
+      res.render('searchResults', {results : results.rows});
+    })
+  }
+});
+
+router.get('/filterGoodSitters', function(req, res, next) {
+  store.getExperiencedSitters().then((results) => {
+    res.render('searchGoodSitters', {results : results.rows});
+  })
+})
+
+router.post('/searchResultsFilter', function(req, res, next) {
+  console.log(req.body)
+  let project = ""
+  if (req.body.col1 != null)
+  {
+    project = 'service_id'
+  }
+  if (req.body.col2 != null)
+  {
+    project = project == "" ? 'priceper' : project + ', ' + 'priceper'
+  }
+  if (req.body.col3 != null)
+  {
+    project = project == "" ? 'user_id' : project + ', ' + 'user_id'
+  }
+  if (req.body.col4 != null)
+  {
+    project = project == "" ? 'servicetype' : project + ', ' + 'servicetype'
+  }
+  store.sortSearchResults(project, current_filter).then((results) => {
+    res.render('searchResultsFilter', {results : results.rows});
+  })
+})
+
+router.post('/confirmBookService', function(req, res, next) {
+  let pet_id = 1;
+    store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], pet_id).then((results) => {
+      res.redirect('/home');
+    })
+});
+
+router.get('/searchResults', function(req, res, next) {
+  console.log(req.body)
+  res.render('searchResults', {results : []});
+});
+
+router.get('/sitterRankings', function(req, res, next) {
+  store.getSitterRanking().then((results) => {
+    res.render('sitterRankings', {results : results.rows});
+  })
 });
 
 router.get('/pastBookings', function(req, res, next) {
   store.getBookingInformation(current_user).then(({rows}) => {
-    console.log(rows);
     res.render('pastBookings', {bookings: rows, current_user: current_user});
   });
 });
 
+// Get pet sitter profile
+router.get('/petsitter/:petsitter_id', function(req, res, next) {
+  const petSitter_id = req.params.petsitter_id;
+  store.getPetSitterProfile(petSitter_id).then(({rows}) => {
+    const profileInfo = rows[0];
+    store.getReviewsForSitter(petSitter_id).then(({rows}) => {
+      const reviews = rows;
+      store.getAverageRating(petSitter_id).then(({rows}) => {
+        console.log(rows[0]);
+        const averageRating = rows[0];
+        res.render('sitterProfile', {current_user: current_user, profile: profileInfo, reviews: reviews, averageRating: averageRating});
+      });
+    });
+  });
+});
+
+router.post('/petsitter/:petsitter_id', function(req, res, next) {
+  const petsitter_id = req.params.petsitter_id;
+  let rating = parseInt(req.body.rating);
+  
+  store.createReview(req.body.user_review, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
+    res.redirect(`/petsitter/${petsitter_id}`);
+  });
+});
+
+
 router.get('/editProfile', function(req, res, next) {
   res.render('editProfile', {});
-});
-
-router.get('/upcomingBookings', function(req, res, next) {
-  res.render('upcomingBookings', {});
-});
-
-router.get('/pets', function(req, res, next) {
-  res.render('pets', {});
 });
 
 router.get('/promoCodes', function(req, res, next) {

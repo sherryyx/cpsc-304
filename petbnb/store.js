@@ -1,5 +1,6 @@
 const knex = require('knex')(require('./knexfile').development);
 
+// Pet owner queries
 const getPetsOfPetOwner = (petowner_id) => {
     return knex.raw(`SELECT * FROM pet p
     WHERE p.user_id = ${petowner_id};`);
@@ -50,13 +51,12 @@ const searchForPromoCode = (promoCodeString) => {
     return knex.raw(`SELECT * FROM promoCode WHERE promocodestring = '${promoCodeString}';`);
 }
 
-const createPet = (pet_id, name, careinstructions, dietinstructions, age, breed, weight, user_id) => {
-    return knex.raw(`INSERT INTO pet (pet_id, name, careinstructions, dietinstructions, age, breed, weight, user_id)
+const createPet = ({name, careInstructions, dietInstructions, age, breed, weight}, user_id) => {
+    return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
     VALUES (
-      ${pet_id},
       '${name}',
-      '${careinstructions}',
-      '${dietinstructions}',
+      '${careInstructions}',
+      '${dietInstructions}',
       ${age},
       '${breed}',
       ${weight},
@@ -64,7 +64,7 @@ const createPet = (pet_id, name, careinstructions, dietinstructions, age, breed,
     );`);
 }
 
-const updatePetInfo = (name, careInstructions, dietInstructions, age, breed, weight, user_id, pet_id) => {
+const updatePetInfo = ({name, careInstructions, dietInstructions, age, breed, weight}, user_id, pet_id) => {
     return knex.raw(`UPDATE pet SET
     name = '${name}',
     careinstructions = '${careInstructions}',
@@ -75,9 +75,18 @@ const updatePetInfo = (name, careInstructions, dietInstructions, age, breed, wei
     WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
 }
 
-const getUpcomingBookings =  () => {   
-return knex.raw(`SELECT * FROM promoCode WHERE promocodestring = '${promoCodeString}';`);
-};
+const getPetInfo = (pet_id, user_id) => {
+    return knex.raw(`SELECT * FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
+}
+const removePet = (pet_id, user_id) => {
+    return knex.raw(`DELETE FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
+}     
+
+// Promo code queries
+
+const searchForPromoCode = (promoCodeString) => {
+    return knex.raw(`SELECT * FROM promoCode WHERE promocodestring = '${promoCodeString}';`);
+}
 
 const redeemPromoCode = (promoCodeString, user_id) => {
     return knex.raw(`INSERT INTO redeems VALUES ('${promoCodeString}', '${user_id}')`)
@@ -90,15 +99,63 @@ const averagePetSitterRating = (() => {
     WHERE R.sitteruser_id = S.user_id;`)
 });
 
-// Group By Aggregation Query
-const groupByAveragePetSitterRating = (() => {
+const getBookingInformation = ({user_id}) => {
+    return knex.raw(`SELECT user_id, sitter_id, booking_id, duration * pricePer as totalPrice, duration, pricePer, booking.service_id, sitterName, petName, serviceType
+    FROM petOwner
+    INNER JOIN booking ON petOwner.user_id = booking.petOwner_id
+    INNER JOIN (SELECT service_id, pricePer, user_id AS sitter_name, serviceType FROM service) AS services ON booking.service_id = services.service_id
+    INNER JOIN (SELECT user_id as sitter_id, name as sitterName FROM petSitter) AS sitterInfo ON sitterInfo.sitter_id = booking.service_id
+    INNER JOIN (SELECT name AS petName, pet_id FROM pet) AS petNames ON petNames.pet_id = booking.pet_id
+    WHERE user_id = ${user_id};
+    `);
+}
+
+// Pet sitter profile queries
+
+const getPetSitterProfile = (user_id) => {
+    return knex.raw(`SELECT user_id, name, bio
+    FROM petSitter
+    WHERE user_id = ${user_id};`);
+}
+
+const getReviewsForSitter = (user_id) => {
+    return knex.raw(`SELECT review_id, reviewContent, rating, owneruser_id, sitteruser_id, ownerName
+    FROM review
+    INNER JOIN (SELECT name as ownerName, user_id FROM petOwner) AS ownerNames ON ownerNames.user_id = review.owneruser_id
+    WHERE sitteruser_id = ${user_id}
+    ORDER BY review_id ASC;`)
+}
+
+const createReview = (reviewcontent, rating, owneruser_id, sitteruser_id) => {
+    return knex.raw(`INSERT INTO review (reviewContent, rating, ownerUser_id, sitterUser_id)
+    VALUES (
+      '${reviewcontent}',
+      ${rating},
+      ${owneruser_id},
+      ${sitteruser_id}
+    ) returning *;`);
+}
+
+
+// Get average rating for a single pet sitter
+const getAverageRating = (user_id) => {
+    return knex.raw(`SELECT AVG(rating)
+    FROM review
+    WHERE sitteruser_id = ${user_id};`)
+}
+
+
+// Service list queries
+
+// Group average rating by pet sitter
+const groupAverageRatingByPetSitter = (() => {
     return knex.raw(`SELECT S.user_id, AVG(R.rating)
     FROM review R, petSitter S
     WHERE R.sitteruser_id = S.user_id
     GROUP BY S.user_id;`)
 });
 
-// Filter Services
+// Filter services
 const filterServices = ((field, value, sign) => {
     if (field === 'pricePer') {
         return knex.raw(`SELECT * 
@@ -118,20 +175,71 @@ const applyPromoCode = ((booking_id, promocodestring,value) => {
     WHERE booking_id = ${booking_id}`)
 })
 
+const priceGt = (textInput) => {
+    return knex.raw(`SELECT * FROM service WHERE pricePer > ${textInput};`);
+}
+
+const priceLt = (textInput) => {
+    return knex.raw(`SELECT * FROM service WHERE pricePer < ${textInput};`);
+}
+
+const serviceType = (textInput) => {
+    return knex.raw(`SELECT * FROM service WHERE serviceType = ${textInput};`);
+}
+
+const getExperiencedSitters = () => {
+    return knex.raw(`SELECT T.user_id FROM petsitter T
+    WHERE NOT EXISTS 
+    (SELECT R.user_id 
+      FROM petowner R
+      EXCEPT 
+      (SELECT S.owneruser_id 
+        FROM review S 
+        WHERE T.user_id = S.sitteruser_id));`);
+}
+
+const sortSearchResults = (project, current_filter) => {
+    return knex.raw(`SELECT ${project} FROM service WHERE ${current_filter};`);
+}
+
+const getSitterRanking = () => {
+    return knex.raw(`SELECT S.user_id, AVG(R.rating)
+    FROM review R, petSitter S
+    WHERE R.sitteruser_id = S.user_id
+    GROUP BY S.user_id;`);
+}
+
+const insertBooking = (time, service_id, user_id, pet_id) => {
+    return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
+    VALUES ( ${time}, ${service_id}, ${user_id}, ${pet_id});`);
+}
+
 module.exports = {
     getPetsOfPetOwner,
+    sortSearchResults,
+    getSitterRanking,
     createPetOwner,
     getPetOwner,
     getBookingInformation,
+    getPetSitterProfile,
+    getReviewsForSitter,
+    createReview,
     createPet,
     removePet,
     updatePetInfo,
     searchForPromoCode,
-    getUpcomingBookings,
     redeemPromoCode,
     averagePetSitterRating,
     filterServices,
-    groupByAveragePetSitterRating,
     applyPromoCode,
-    getBookings
+    getBookings,
+    getAverageRating,
+    filterServices,
+    groupAverageRatingByPetSitter,
+    priceGt,
+    priceLt,
+    serviceType,
+    getExperiencedSitters,
+    insertBooking,
+    getPetInfo
 };
