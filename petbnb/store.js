@@ -39,8 +39,7 @@ const getBookingInformation = ({user_id}) => {
     INNER JOIN (SELECT service_id, pricePer, user_id AS sitter_name, serviceType FROM service) AS services ON booking.service_id = services.service_id
     INNER JOIN (SELECT user_id as sitter_id, name as sitterName FROM petSitter) AS sitterInfo ON sitterInfo.sitter_id = booking.service_id
     INNER JOIN (SELECT name AS petName, pet_id FROM pet) AS petNames ON petNames.pet_id = booking.pet_id
-    WHERE user_id = ${user_id};
-    `)
+    WHERE user_id = ${user_id};`);
 }                                        
 const editPetOwner = ({full_name, phone_number, house_number, street_name, postal_code}, user_id) => {
     return knex.raw(`UPDATE petOwner SET
@@ -208,14 +207,14 @@ const insertBooking = (time, service_id, user_id, pet_id) => {
         console.log(row1);
         let id = row1.rows[0].booking_id;
         return knex.raw(`CREATE VIEW temp AS (
-            SELECT b.booking_id as booking_id, b.service_id as service_id, s.priceper * b.duration as totalPriceOfService
+            SELECT b.booking_id as booking_id, b.service_id as service_id, s.priceper * b.duration as totalPrice
             FROM booking b, service s
             WHERE ${id} = b.booking_id AND ${service_id} = s.service_id
           );`).then(() =>  {
-            return knex.raw(`SELECT booking_id, service_id, totalPriceOfService from temp`).then((row) => {
+            return knex.raw(`SELECT booking_id, service_id, totalPrice from temp`).then((row) => {
                 let t = row.rows[0];
                 console.log(t);
-                  return knex.raw(`UPDATE booking SET totalPrice = ${t.totalpriceofservice}
+                  return knex.raw(`UPDATE booking SET totalPrice = ${t.totalprice}
                   WHERE booking.booking_id = ${id}`).then(() => {
                       return knex.raw(`DROP VIEW if exists temp`);
                   });

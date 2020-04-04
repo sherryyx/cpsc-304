@@ -16,7 +16,8 @@ exports.up = function(knex) {
         FOREIGN KEY (pet_id) REFERENCES pet (pet_id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-        PRIMARY KEY (booking_id)
+        PRIMARY KEY (booking_id),
+        CHECK (totalPrice > 0)
     );`);
 };
 
