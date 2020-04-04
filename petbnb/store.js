@@ -204,7 +204,24 @@ const getSitterRanking = () => {
 
 const insertBooking = (time, service_id, user_id, pet_id) => {
     return knex.raw(`INSERT INTO booking (duration, service_id, petowner_id, pet_id)
-    VALUES ( ${time}, ${service_id}, ${user_id}, ${pet_id});`);
+    VALUES ( ${time}, ${service_id}, ${user_id}, ${pet_id}) returning *;`).then((row1) => {
+        console.log(row1);
+        let id = row1.rows[0].booking_id;
+        return knex.raw(`CREATE VIEW temp AS (
+            SELECT b.booking_id as booking_id, b.service_id as service_id, s.priceper * b.duration as totalPriceOfService
+            FROM booking b, service s
+            WHERE ${id} = b.booking_id AND ${service_id} = s.service_id
+          );`).then(() =>  {
+            return knex.raw(`SELECT booking_id, service_id, totalPriceOfService from temp`).then((row) => {
+                let t = row.rows[0];
+                console.log(t);
+                  return knex.raw(`UPDATE booking SET totalPrice = ${t.totalpriceofservice}
+                  WHERE booking.booking_id = ${id}`).then(() => {
+                      return knex.raw(`DROP VIEW if exists temp`);
+                  });
+              })
+          })
+    })
 }
 
 module.exports = {

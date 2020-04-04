@@ -74,12 +74,7 @@ const createServiceAndBooking = (knex, sitter_id, pet_id, owner_id) => {
         '${faker.random.arrayElement(["Pet boarding", "Pet walking", "Drop in visit"])}'
     ) returning service_id;`).then(({rows}) => {
       const service_id = rows[0].service_id;
-      return createBooking(knex, service_id, owner_id, pet_id).then(() => {
-        return knex.raw(`CREATE VIEW totalPriceOfService AS
-        (SELECT service.service_id as service_id, service.pricePer * booking.duration AS totalPrice
-        FROM service, booking
-        WHERE service.service_id = booking.service_id);`);
-      });
+      return createBooking(knex, service_id, owner_id, pet_id);
     });
 }
 
@@ -123,7 +118,7 @@ const createBooking = async (knex, service_id, owner_id, pet_id) => {
 
 exports.seed = (knex) => {
   // Deletes ALL existing entries
-  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking;`)
+  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking; DELETE FROM promoCode; DROP VIEW if exists totalPriceView`)
     .then(async () => {
       let records = [];
 
@@ -136,7 +131,6 @@ exports.seed = (knex) => {
       var e = new Date().getTime() + (3000);
       while (new Date().getTime() <= e) {}
       
-      console.log(arr2)
       for(i = 0; i < arr1.length; i++)
       {
         for (j = 0; j < 5; j++)
@@ -146,11 +140,19 @@ exports.seed = (knex) => {
       }
 
       return Promise.all(records).then(() => {
-        return knex.raw(`SELECT booking_id, totalPriceOfService from totalPriceOfService`).then((row) => {
-          for (let i = 0; i < row.length; i++) {
-            knex.raw(`UPDATE booking SET totalPrice = ${row[i].totalPriceOfService}
-            WHERE service_id = ${row[i]['S.service_id']}`);
-          }
+        return knex.raw(`CREATE VIEW totalPriceView AS (
+          SELECT  b.service_id as service_id, b.booking_id as booking_id, s.priceper * b.duration as totalPriceOfService
+          FROM booking b, service s
+          WHERE s.service_id = b.service_id
+        )`).then(() => {
+          return knex.raw(`SELECT booking_id, service_id, totalPriceOfService from totalPriceView`).then((row) => {
+            let rows = row.rows;
+            for (let i = 0; i < rows.length; i++) {
+              records.push(knex.raw(`UPDATE booking SET totalPrice = ${rows[i].totalpriceofservice}
+              WHERE booking.booking_id = ${rows[i].booking_id};`));
+            }
+            return Promise.all(records);
+          })
         })
       });
     });
