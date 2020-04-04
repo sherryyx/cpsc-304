@@ -103,7 +103,7 @@ router.post('/searchResults', function(req, res, next) {
   else if (req.body.column == 'service')
   {
     store.serviceType(req.body.textInput).then((results) => {
-      current_filter = `serviceType = ' + ${req.body.textInput}` + '';
+      current_filter = `serviceType = '` + `${req.body.textInput}` + '\'';
       res.render('searchResults', {results : results.rows});
     })
   }
