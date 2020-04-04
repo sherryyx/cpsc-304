@@ -44,6 +44,39 @@ router.get('/pets', function(req, res, next) {
   });
 });
 
+router.get('/pet/:pet_id', function(req, res, next) {
+  const pet_id = req.params.pet_id;
+  store.getPetInfo(pet_id, current_user["user_id"]).then(({rows}) => {
+    const pet = rows[0];
+    res.render('editPet', { pet: pet});
+  });
+});
+
+router.post('/pet/:pet_id', function(req, res, next) {
+  const pet_id = req.params.pet_id;
+  store.updatePetInfo(req.body, current_user["user_id"], pet_id).then(() => {
+    res.redirect('/pets');
+  });
+});
+
+router.get('/remove-pet/:pet_id', function(req, res, next) {
+  const pet_id = req.params.pet_id;
+  store.removePet(pet_id, current_user["user_id"]).then(() => {
+    res.redirect('/pets');
+  });
+});
+
+router.get('/create-pet', function(req, res, next) {
+  res.render('createPet', {});
+});
+
+router.post('/pets', function(req, res, next) {
+  store.createPet(req.body, current_user["user_id"]).then(() => {
+    res.redirect('/pets');
+  });
+});
+
+
 router.get('/searchList', function(req, res, next) {
   res.render('searchList')
 });
@@ -147,7 +180,6 @@ router.get('/petsitter/:petsitter_id', function(req, res, next) {
 });
 
 router.post('/petsitter/:petsitter_id', function(req, res, next) {
-  console.log(req.body);
   const petsitter_id = req.params.petsitter_id;
   let rating = parseInt(req.body.rating);
   

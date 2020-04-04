@@ -1,0 +1,75 @@
+<%- include('header'); -%>
+<div class="container">
+    <form action="/pets" method="get" class="back-button">
+        <button class="mdc-fab" aria-label="back">
+            <div class="mdc-fab__ripple"></div>
+            <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+        </button>
+    </form>
+    <div class="edit-pet-container">
+        <h1>Edit your pet's information</h1>
+        <div class="margin"></div>
+        <form action="/pets" method="post">
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="name" name="name">
+                <span class="mdc-floating-label" id="my-label-id">Name</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="breed" name="breed">
+                <span class="mdc-floating-label" id="my-label-id">Breed</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="age" name="age">
+                <span class="mdc-floating-label" id="my-label-id">Age</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="weight" name="weight">
+                <span class="mdc-floating-label" id="my-label-id">Weight in kg</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <label class="mdc-text-field mdc-text-field--textarea" data-mdc-auto-init="MDCTextField">
+                <textarea class="mdc-text-field__input" aria-labelledby="my-label-id" rows="8" cols="40" id="careInstructions" name="careInstructions">
+                </textarea>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" id="my-label-id">Care instructions</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </label>
+            <label class="mdc-text-field mdc-text-field--textarea" data-mdc-auto-init="MDCTextField">
+                <textarea class="mdc-text-field__input" aria-labelledby="my-label-id" rows="8" cols="40" id="dietInstructions" name="dietInstructions">
+                </textarea>
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label" id="my-label-id">Diet instructions</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </label>
+            <div class="edit-submit">
+                <button class="mdc-button mdc-button--unelevated">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Save changes</span>
+                </button>
+            </div>
+        </form>
+        <p role="separator" class="mdc-list-divider"></p>
+        <form action="/pets" method="get">
+            <button class="mdc-button mdc-button--unelevated delete">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Cancel</span>
+            </button>
+        </form>
+    </div>
+</div>
+<%- include('footer'); -%>

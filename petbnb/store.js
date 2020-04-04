@@ -25,12 +25,12 @@ const getPetOwner = ({user_id}) => {
 
 // Pet queries
 
-const createPet = (name, careinstructions, dietinstructions, age, breed, weight, user_id) => {
-    return knex.raw(`INSERT INTO pet (pet_id, name, careinstructions, dietinstructions, age, breed, weight, user_id)
+const createPet = ({name, careInstructions, dietInstructions, age, breed, weight}, user_id) => {
+    return knex.raw(`INSERT INTO pet (name, careinstructions, dietinstructions, age, breed, weight, user_id)
     VALUES (
       '${name}',
-      '${careinstructions}',
-      '${dietinstructions}',
+      '${careInstructions}',
+      '${dietInstructions}',
       ${age},
       '${breed}',
       ${weight},
@@ -38,12 +38,7 @@ const createPet = (name, careinstructions, dietinstructions, age, breed, weight,
     );`);
 }
 
-const getPetNameGivenID = (pet_id) => {
-    return knex.raw(`SELECT name FROM pet p
-    WHERE p.pet_id = ${pet_id};`);
-}
-
-const updatePetInfo = (name, careInstructions, dietInstructions, age, breed, weight, user_id, pet_id) => {
+const updatePetInfo = ({name, careInstructions, dietInstructions, age, breed, weight}, user_id, pet_id) => {
     return knex.raw(`UPDATE pet SET
     name = '${name}',
     careinstructions = '${careInstructions}',
@@ -54,6 +49,9 @@ const updatePetInfo = (name, careInstructions, dietInstructions, age, breed, wei
     WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
 }
 
+const getPetInfo = (pet_id, user_id) => {
+    return knex.raw(`SELECT * FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
+}
 const removePet = (pet_id, user_id) => {
     return knex.raw(`DELETE FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
 }     
@@ -200,5 +198,6 @@ module.exports = {
     priceLt,
     serviceType,
     getExperiencedSitters,
-    insertBooking
+    insertBooking,
+    getPetInfo
 };

@@ -37,7 +37,13 @@ a {
   color: #00B7FF;
 }
 
+.margin {
+  height: 16px;
+}
 
+.small-margin {
+  height: 8px;
+}
 /** Landing Page **/
 .landing-container {
   display: flex;
@@ -250,7 +256,7 @@ a {
 
 /** Pets view **/
 .pets-container {
-  max-width: 600px;
+  max-width: 500px;
   margin: auto;
   padding: 32px;
   display: flex;
@@ -259,11 +265,12 @@ a {
 }
 
 .pets-container .mdc-button{
-  margin: 16px 0px 0px -8px;
+  margin: 16px 16px 0px -8px;
 }
 
 .pet-card {
   padding: 24px;
+  margin: 24px 0px 0px 0px;
 }
 
 .pet-card h2, .pet-card h3, p {
@@ -274,5 +281,50 @@ a {
   color: rgb(126, 126, 126);
 }
 
+.pets-container .margin {
+  height: 16px;
+}
 
+.pets-container form {
+  margin-bottom: 0px;
+}
 
+.small-margin {
+  height: 12px;
+}
+
+.floating-button {
+  right: 48px;
+  bottom: 48px;
+  float: right;
+  position: sticky;
+}
+
+.add-button {
+  background-color: var(--mdc-theme-primary);
+}
+
+/** Edit pet view **/
+.edit-pet-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.edit-pet-container .mdc-text-field {
+  width: 80%;
+  margin-bottom: 24px;
+}
+
+.edit-pet-container .mdc-text-field--textarea{
+  margin-top: 24px;
+  height: 150px;
+}
+
+.edit-pet-container .delete {
+  background-color: var(--mdc-theme-error);
+  margin-top: 16px;
+}
