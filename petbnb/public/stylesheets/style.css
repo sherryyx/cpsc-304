@@ -335,3 +335,43 @@ a {
   background-color: var(--mdc-theme-error);
   margin-top: 16px;
 }
+
+/** Edit profile **/ 
+.profile-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.profile-container h3, .profile-container p {
+  margin-bottom: 4px;
+}
+
+.profile-container .mdc-button {
+  margin: 16px 0px 0px -8px;
+}
+
+.edit-profile-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 32px;
+  background-color: white;
+}
+
+.edit-profile-container .mdc-text-field {
+  width: 80%;
+  margin-bottom: 24px;
+}
+
+/** searchList **/ 
+.filter-container {
+  padding: 32px 0px 24px 0px;
+}
+
+.radio-container .mdc-form-field {
+  display: flex;
+  flex-direction: row;
+}

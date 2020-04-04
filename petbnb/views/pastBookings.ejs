@@ -18,7 +18,7 @@
                 <h3>Duration</h3>
                 <p><%= booking.duration %> hrs</p>
                 <div class="mdc-card__actions review-button">
-                    <form action="<%= `/petsitter/${booking.sitter_id}` %>" method="get">
+                    <form action="<%= `/petsitter-review/${booking.sitter_id}` %>" method="get">
                         <button class="mdc-button mdc-card__action mdc-card__action--button">
                             <div class="mdc-button__ripple"></div>
                             <span class="mdc-button__label">Leave a review</span>
