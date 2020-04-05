@@ -237,8 +237,8 @@ router.post('/edit-profile', function(req, res, next) {
 // Promo code
 
 router.get('/promoCodes', function(req, res, next) {
-  store.getBookings(current_user["user_id"]).then((rows) => {
-    res.render('promoCodes', {bookings:rows.rows});
+  store.getBookingInformation(current_user).then((rows) => {
+    res.render('promoCodes', {bookings: rows.rows});
   })
 });
 
@@ -247,8 +247,8 @@ router.post('/promoCodes', function(req, res, next) {
     let promo = rows[0];
     store.redeemPromoCode(req.body.promoCode, current_user["user_id"]).then(() => {
       store.applyPromoCode(req.body.booking_id, req.body.promoCode, promo.value).then(() => {
-        store.getBookings(current_user["user_id"]).then((rows) => {
-          res.render('promoCodes', {bookings:rows.rows, applied: 1});
+        store.getBookingInformation(current_user).then((rows) => {
+          res.render('promoCodes', {bookings: rows.rows, promo, applied: 1});
         })
       })
     })

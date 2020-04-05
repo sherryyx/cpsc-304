@@ -1,23 +1,41 @@
 <%- include('header'); -%>
-<form action="/promoCodes" method="POST" class="form-container" id = "promoForm">
-  <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
-      <div class="mdc-text-field__ripple"></div>
-      <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="promoCode" name="promoCode">
-      <span class="mdc-floating-label" id="my-label-id">PromoCode</span>
-      <div class="mdc-line-ripple"></div>
-  </label>
-  <select id="booking_id" name="booking_id" form="promoForm">
-    <% for (let b of bookings)  { %>
-      <option><%= b['booking_id'] %></option>
-      <% } %>
-  </select>
-  <button class="mdc-button mdc-button--unelevated">
-      <div class="mdc-button__ripple"></div>
-      <span class="mdc-button__label">REEDEM</span>
-  </button>
-</form>
-
-<%if (typeof applied !== 'undefined') { %>
-  Promo Code Applied Successfully
-  <% } %>
+<div class="container">
+    <div class="promo-container">
+        <form action="/home" method="get" class="back-button">
+            <button class="mdc-fab" aria-label="back">
+                <div class="mdc-fab__ripple"></div>
+                <span class="mdc-fab__icon material-icons">keyboard_backspace</span>
+            </button>
+        </form>
+        <div class="home-hero">
+            <img src="/assets/promo.png" alt="dog" id="dog-gif">
+        </div>
+        <h1>Redeem your discount code</h1>
+        <form action="/promoCodes" method="POST" class="form-container" id = "promoForm">
+            <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
+                <div class="mdc-text-field__ripple"></div>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="promoCode" name="promoCode">
+                <span class="mdc-floating-label" id="my-label-id">Enter your discount code</span>
+                <div class="mdc-line-ripple"></div>
+            </label>
+            <p>
+                Which booking would you like to apply it to?
+            </p>
+            <select id="booking_id" name="booking_id" form="promoForm">
+                <% for (let b of bookings)  { %>
+                <option value="<%= b.service_id %>"><%= b.sittername %>: <%= b.servicetype %></option>
+                <% } %>
+            </select>
+            <button class="mdc-button mdc-button--unelevated">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Redeem</span>
+            </button>
+        </form>
+        <%if (typeof applied !== 'undefined') { %>
+            <div class="promo-message">
+                <p>Discount code successfully applied! You saved $<%= promo.value%></p>
+            </div>
+        <% } %>
+    </div>
+</div>
 <%- include('footer'); -%>
