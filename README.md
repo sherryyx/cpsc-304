@@ -1,10 +1,4 @@
 # TA Instructions
-## Starting the server
-```
-> cd petbnb
-> node app.js
-```
-
 ## Setting up the database
 
 Enter the postgres console:
@@ -21,6 +15,14 @@ create database petbnb;
 ```
 ./init-db.sh
 ```
+
+## Starting the server
+```
+> cd petbnb
+> node app.js
+```
+Open the app here: 
+http://localhost:8080/
 
 You're done!
 \
