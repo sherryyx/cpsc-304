@@ -1,10 +1,11 @@
-# Starting the server
+# TA Instructions
+## Starting the server
 ```
 > cd petbnb
 > node app.js
 ```
 
-# Setting up the database
+## Setting up the database
 
 Enter the postgres console:
 ```
@@ -16,6 +17,19 @@ Then run the following SQL commands inside postgres:
 CREATE ROLE root WITH LOGIN PASSWORD 'password';
 create database petbnb;
 ```
+## Run provided script to create and populate tables
+```
+./init-db.sh
+```
+
+You're done!
+\
+\
+\
+\
+\
+
+- - -
 
 # Installing dependencies
 ```
