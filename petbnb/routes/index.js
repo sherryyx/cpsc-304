@@ -82,31 +82,34 @@ router.get('/searchList', function(req, res, next) {
 });
 
 router.post('/bookService', function(req, res, next) {
-  res.render('bookService', {service_id : req.body.service_id, name : req.body.name, service_type: req.body.servicetype});
+  res.render('bookService', {service_id : req.body.service_id, name : req.body.name, service_type: req.body.servicetype, pet_id: req.body.pet_id});
 });
 
 router.post('/searchResults', function(req, res, next) {
-  if (req.body.column == 'pricegt')
-  {
-    store.priceGt(req.body.textInput).then((results) => {
-      current_filter = `pricePer > ${req.body.textInput}`
-      res.render('searchResults', {results : results.rows});
-    })
-  }
-  else if (req.body.column == 'pricelt')
-  {
-    store.priceLt(req.body.textInput).then((results) => {
-      current_filter = `pricePer < ${req.body.textInput}`
-      res.render('searchResults', {results : results.rows});
-    })
-  }
-  else if (req.body.column == 'service')
-  {
-    store.serviceType(req.body.textInput).then((results) => {
-      current_filter = `serviceType = '` + `${req.body.textInput}` + '\'';
-      res.render('searchResults', {results : results.rows});
-    })
-  }
+  store.getPetsOfPetOwner(current_user['user_id']).then((pets) => {
+    let myPets = pets.rows;
+    if (req.body.column == 'pricegt')
+    {
+      store.priceGt(req.body.textInput).then((results) => {
+        current_filter = `pricePer > ${req.body.textInput}`
+        res.render('searchResults', {results : results.rows, pets: myPets});
+      })
+    }
+    else if (req.body.column == 'pricelt')
+    {
+      store.priceLt(req.body.textInput).then((results) => {
+        current_filter = `pricePer < ${req.body.textInput}`
+        res.render('searchResults', {results : results.rows, pets: myPets});
+      })
+    }
+    else if (req.body.column == 'service')
+    {
+      store.serviceType(req.body.textInput).then((results) => {
+        current_filter = `serviceType = '` + `${req.body.textInput}` + '\'';
+        res.render('searchResults', {results : results.rows, pets: myPets});
+      })
+    }
+  })
 });
 
 router.get('/filterGoodSitters', function(req, res, next) {
@@ -147,8 +150,8 @@ router.post('/searchResultsFilter', function(req, res, next) {
 })
 
 router.post('/confirmBookService', function(req, res, next) {
-  let pet_id = 1;
-    store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], pet_id).then((results) => {
+  console.log(req.body);
+    store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], req.body.pet_id).then((results) => {
       res.redirect('/home');
     })
 });

@@ -84,6 +84,7 @@
                       <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Name</th>
                       <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Price/hr</th>
                       <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Service type</th>
+                      <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Pet ID</th>
                     </tr>
                   </thead>
                   <tbody class="mdc-data-table__content">
@@ -93,10 +94,18 @@
                           <td class="mdc-data-table__cell"><%= results[i].name %></td>
                           <td class="mdc-data-table__cell">$<%= results[i].priceper %></td>
                           <td class="mdc-data-table__cell"><%= results[i].servicetype %></td>
+                            <td class="mdc-data-table__cell">
+                            <select id="pet_id" name="pet_id">
+                              <% for (let p of pets)  { %>
+                                <option><%= p['pet_id'] %></option>
+                                <% } %>
+                            </select>
+                          </td>
                           <td class="mdc-data-table__cell">
                           <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="name" value = <%= results[i].name %>>
                           <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="priceper" value = <%= results[i].priceper %>>
                           <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="servicetype" value = <%= results[i].servicetype %>>
+                          <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="service_id" value = <%= results[i].service_id %>>
                           <button class="mdc-button mdc-button--unelevated">
                               <div class="mdc-button__ripple"></div>
                               <span class="mdc-button__label">Book service</span>

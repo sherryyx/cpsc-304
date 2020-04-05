@@ -16,10 +16,13 @@
                 
                         <h3>Name: <%= name %></h3>
                         <h3>Service Type: <%= service_type %></h3>
+                        <h3>Service ID: <%= service_id %></h3>
+                        <h3>Pet ID: <%= pet_id %></h3>
                     <label class="mdc-text-field" data-mdc-auto-init="MDCTextField">
                             <div class="mdc-text-field__ripple"></div>
-                            <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="service_id" value = <%= service_id %>>
+                            <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="service_id" name="service_id" value = <%= service_id %>>
                             <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="phone_number" name="duration">
+                            <input class="mdc-text-field__input" type="hidden" aria-labelledby="my-label-id" id="pet_id" name="pet_id" value = <%= pet_id %>>
                             <span class="mdc-floating-label" id="my-label-id">Duration: </span>
                             <div class="mdc-line-ripple"></div>
                     </label>
