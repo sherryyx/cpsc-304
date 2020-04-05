@@ -11,7 +11,7 @@ Then run the following SQL commands inside postgres:
 CREATE ROLE root WITH LOGIN PASSWORD 'password';
 create database petbnb;
 ```
-## Run provided script to create and populate tables
+## Run provided script inside the /petbnb folder to create and populate tables
 ```
 ./init-db.sh
 ```
