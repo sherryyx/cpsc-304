@@ -82,7 +82,6 @@ router.get('/searchList', function(req, res, next) {
 });
 
 router.post('/bookService', function(req, res, next) {
-  console.log(req.body)
   res.render('bookService', {service_id : req.body.service_id, name : req.body.name, service_type: req.body.servicetype});
 });
 
@@ -167,6 +166,7 @@ router.get('/sitterRankings', function(req, res, next) {
 
 router.get('/pastBookings', function(req, res, next) {
   store.getBookingInformation(current_user).then(({rows}) => {
+    console.log(rows);
     res.render('pastBookings', {bookings: rows, current_user: current_user});
   });
 });
@@ -195,7 +195,10 @@ router.get('/petsitter-review/:petsitter_id', function(req, res, next) {
 router.post('/petsitter-review/:petsitter_id', function(req, res, next) {
   const petsitter_id = req.params.petsitter_id;
   let rating = parseInt(req.body.rating);
-  
+  let userReview = req.body.user_review;
+  for (let character of userReview) {
+    console.log(character);
+  }
   store.createReview(req.body.user_review, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
     res.redirect(`/petsitter-review/${petsitter_id}`);
   });
@@ -247,7 +250,6 @@ router.get('/promoCodes', function(req, res, next) {
 });
 
 router.post('/promoCodes', function(req, res, next) {
-  console.log(req.body);
   store.searchForPromoCode(req.body.promoCode).then(({rows}) => {
     let promo = rows[0];
     store.redeemPromoCode(req.body.promoCode, current_user["user_id"]).then(() => {

@@ -94,8 +94,9 @@ const getBookingInformation = ({user_id}) => {
     return knex.raw(`SELECT user_id, sitter_id, booking_id, duration, pricePer, booking.service_id, sitterName, petName, serviceType, totalPrice
     FROM petOwner
     INNER JOIN booking ON petOwner.user_id = booking.petOwner_id
-    INNER JOIN (SELECT service_id, pricePer, user_id AS sitter_name, serviceType FROM service) AS services ON booking.service_id = services.service_id
-    INNER JOIN (SELECT user_id as sitter_id, name as sitterName FROM petSitter) AS sitterInfo ON sitterInfo.sitter_id = booking.service_id
+    INNER JOIN (SELECT service_id, pricePer, service.user_id AS sitter_id, serviceType, name as sitterName
+                FROM service
+                INNER JOIN petSitter ON petSitter.user_id = service.user_id) AS servicesAndSitters ON booking.service_id = servicesAndSitters.service_id
     INNER JOIN (SELECT name AS petName, pet_id FROM pet) AS petNames ON petNames.pet_id = booking.pet_id
     WHERE user_id = ${user_id};
     `);
