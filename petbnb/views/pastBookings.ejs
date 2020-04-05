@@ -15,7 +15,7 @@
         <% bookings.forEach(function(booking) { %>
             <div class="mdc-card booking">
                 <h2><%= booking.sittername %></h2>
-                <h4><%= booking.servicetype %> for <%= booking.petname %></h4>
+                <h4><%= booking.servicetype %> for <span id="pet-name"><%= booking.petname %></span></h4>
                 <h3>Total price</h3>
                 <p>$<%= booking.totalprice.toFixed(2) %></p>
                 <h3>Duration</h3>

@@ -261,6 +261,10 @@ a {
   height: 28px;
 }
 
+#pet-name {
+  color: var(--mdc-theme-primary, #6200ee);
+}
+
 /** Pets view **/
 .pets-container {
   max-width: 500px;
