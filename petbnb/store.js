@@ -26,7 +26,7 @@ const getPetOwner = ({user_id}) => {
 const editPetOwner = ({full_name, phone_number, house_number, street_name, postal_code}, user_id) => {
     return knex.raw(`UPDATE petOwner SET
     name = '${full_name}',
-    phonenumber = ${phone_number},
+    phonenumber = '${phone_number}',
     housenumber = ${house_number},
     street = '${street_name}',
     postalcode = '${postal_code}'
@@ -77,6 +77,17 @@ const redeemPromoCode = (promoCodeString, user_id) => {
     return knex.raw(`INSERT INTO redeems VALUES ('${promoCodeString}', '${user_id}')`)
 }
 
+const applyPromoCode = ((booking_id, promocodestring,value) => {
+    return knex.raw(`INSERT INTO applyTo VALUES ('${promocodestring}', ${booking_id});
+    UPDATE booking 
+    SET totalPrice = totalPrice - ${value}
+    WHERE booking_id = ${booking_id}`)
+})
+
+const getBookings = (user_id) => {
+    return knex.raw(`SELECT * FROM booking
+    where petOwner_id = ${user_id};`);
+}
 // Booking queries 
 
 const getBookingInformation = ({user_id}) => {
@@ -210,7 +221,9 @@ module.exports = {
     updatePetInfo,
     searchForPromoCode,
     redeemPromoCode,
+    applyPromoCode,
     getAverageRating,
+    getBookings,
     filterServices,
     groupAverageRatingByPetSitter,
     priceGt,

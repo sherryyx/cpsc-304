@@ -237,8 +237,26 @@ router.post('/edit-profile', function(req, res, next) {
   });
 });
 
+// Promo code
+
 router.get('/promoCodes', function(req, res, next) {
-  res.render('promoCodes', {});
+  store.getBookings(current_user["user_id"]).then((rows) => {
+    res.render('promoCodes', {bookings:rows.rows});
+  })
+});
+
+router.post('/promoCodes', function(req, res, next) {
+  console.log(req.body);
+  store.searchForPromoCode(req.body.promoCode).then(({rows}) => {
+    let promo = rows[0];
+    store.redeemPromoCode(req.body.promoCode, current_user["user_id"]).then(() => {
+      store.applyPromoCode(req.body.booking_id, req.body.promoCode, promo.value).then(() => {
+        store.getBookings(current_user["user_id"]).then((rows) => {
+          res.render('promoCodes', {bookings:rows.rows, applied: 1});
+        })
+      })
+    })
+  })
 });
 
 
