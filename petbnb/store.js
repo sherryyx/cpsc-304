@@ -179,14 +179,18 @@ const serviceType = (textInput) => {
 }
 
 const getExperiencedSitters = () => {
-    return knex.raw(`SELECT T.user_id, T.name FROM petsitter T 
+    return knex.raw(`SELECT T.user_id, T.name, COUNT(R.rating)
+    FROM petsitter T, review R
     WHERE NOT EXISTS 
     (SELECT R.user_id 
       FROM petowner R
       EXCEPT 
       (SELECT S.owneruser_id 
         FROM review S 
-        WHERE T.user_id = S.sitteruser_id));`);
+        WHERE T.user_id = S.sitteruser_id))
+    AND T.user_id = R.sitteruser_id
+    GROUP BY T.user_id
+    ORDER BY COUNT(R.rating) desc;`);
 }
 
 const sortSearchResults = (project, current_filter) => {

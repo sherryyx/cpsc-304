@@ -111,6 +111,7 @@ router.post('/searchResults', function(req, res, next) {
 
 router.get('/filterGoodSitters', function(req, res, next) {
   store.getExperiencedSitters().then((results) => {
+    console.log(results);
     res.render('searchGoodSitters', {results : results.rows});
   })
 })
