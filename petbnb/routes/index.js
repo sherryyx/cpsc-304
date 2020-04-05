@@ -89,7 +89,6 @@ router.post('/searchResults', function(req, res, next) {
   if (req.body.column == 'pricegt')
   {
     store.priceGt(req.body.textInput).then((results) => {
-      console.log(results.rows);
       current_filter = `pricePer > ${req.body.textInput}`
       res.render('searchResults', {results : results.rows});
     })
@@ -112,7 +111,6 @@ router.post('/searchResults', function(req, res, next) {
 
 router.get('/filterGoodSitters', function(req, res, next) {
   store.getExperiencedSitters().then((results) => {
-    // console.log(results)
     res.render('searchGoodSitters', {results : results.rows});
   })
 })
@@ -166,7 +164,6 @@ router.get('/sitterRankings', function(req, res, next) {
 
 router.get('/pastBookings', function(req, res, next) {
   store.getBookingInformation(current_user).then(({rows}) => {
-    console.log(rows);
     res.render('pastBookings', {bookings: rows, current_user: current_user});
   });
 });
@@ -179,7 +176,6 @@ router.get('/petsitter-review/:petsitter_id', function(req, res, next) {
     store.getReviewsForSitter(petSitter_id).then(({rows}) => {
       const reviews = rows;
       store.getAverageRating(petSitter_id).then(({rows}) => {
-        console.log(rows[0]);
         let averageRating = rows[0].avg;
         if (averageRating == null) {
           averageRating = 'No ratings yet'
@@ -196,10 +192,8 @@ router.post('/petsitter-review/:petsitter_id', function(req, res, next) {
   const petsitter_id = req.params.petsitter_id;
   let rating = parseInt(req.body.rating);
   let userReview = req.body.user_review;
-  for (let character of userReview) {
-    console.log(character);
-  }
-  store.createReview(req.body.user_review, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
+  userReview = userReview.replace(/\'/g, "''");
+  store.createReview(userReview, rating, current_user["user_id"],petsitter_id).then(({rows}) => {
     res.redirect(`/petsitter-review/${petsitter_id}`);
   });
 });
@@ -212,7 +206,6 @@ router.get('/petsitter/:petsitter_id', function(req, res, next) {
     store.getReviewsForSitter(petSitter_id).then(({rows}) => {
       const reviews = rows;
       store.getAverageRating(petSitter_id).then(({rows}) => {
-        console.log(rows[0]);
         let averageRating = rows[0].avg;
         if (averageRating == null) {
           averageRating = 'No ratings yet'
