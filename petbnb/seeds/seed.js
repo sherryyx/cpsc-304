@@ -133,8 +133,7 @@ exports.seed = (knex) => {
 
       var e = new Date().getTime() + (3000);
       while (new Date().getTime() <= e) {}
-      
-      console.log(arr2)
+    
       for(i = 0; i < arr1.length; i++)
       {
         for (j = 0; j < 5; j++)
