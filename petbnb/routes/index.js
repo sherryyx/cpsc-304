@@ -82,7 +82,20 @@ router.get('/searchList', function(req, res, next) {
 });
 
 router.post('/bookService', function(req, res, next) {
-  res.render('bookService', {service_id : req.body.service_id, name : req.body.name, service_type: req.body.servicetype, pet_id: req.body.pet_id});
+  console.log(req.body);
+  store.getPetName(req.body.pet_id, current_user["user_id"]).then(({rows}) => {
+    const pet_name = rows[0].name;
+    console.log(pet_name);
+    res.render('bookService', {service_id : req.body.service_id, pet_name: pet_name,
+      service_type: req.body.servicetype, pet_id: req.body.pet_id, name: req.body.name});
+  });
+});
+
+router.post('/confirmBookService', function(req, res, next) {
+  console.log(req.body);
+    store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], req.body.pet_id).then((results) => {
+      res.redirect('/pastBookings');
+    })
 });
 
 router.post('/searchResults', function(req, res, next) {
@@ -149,12 +162,6 @@ router.post('/searchResultsFilter', function(req, res, next) {
   })
 })
 
-router.post('/confirmBookService', function(req, res, next) {
-  console.log(req.body);
-    store.insertBooking(req.body.duration, req.body.service_id, current_user["user_id"], req.body.pet_id).then((results) => {
-      res.redirect('/home');
-    })
-});
 
 router.get('/searchResults', function(req, res, next) {
   res.render('searchResults', {results : []});

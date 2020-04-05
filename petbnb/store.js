@@ -63,9 +63,14 @@ const updatePetInfo = ({name, careInstructions, dietInstructions, age, breed, we
 const getPetInfo = (pet_id, user_id) => {
     return knex.raw(`SELECT * FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
 }
+
 const removePet = (pet_id, user_id) => {
     return knex.raw(`DELETE FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
 }     
+
+const getPetName = (pet_id, user_id) => {
+    return knex.raw(`SELECT name FROM pet WHERE pet_id = ${pet_id} AND user_id = ${user_id};`);
+}
 
 // Promo code queries
 
@@ -111,6 +116,7 @@ const getPetSitterProfile = (user_id) => {
     WHERE user_id = ${user_id};`);
 }
 
+// JOIN QUERY - user is choosing which sitter to join on
 const getReviewsForSitter = (user_id) => {
     return knex.raw(`SELECT review_id, reviewContent, rating, owneruser_id, sitteruser_id, ownerName
     FROM review
@@ -210,14 +216,11 @@ const getSitterRanking = () => {
 
 const insertBooking = (time, service_id, user_id, pet_id) => {
     return knex.raw(`SELECT pet_id FROM pet;`).then((rows) => {
-        console.log(rows);
         return knex.raw(`SELECT pricePer FROM service WHERE service_id = ${service_id}`).then((row1) => {
             let pricePer = row1.rows[0].priceper;
             let totalPrice = pricePer * time;
-            console.log("totalPrice: " + totalPrice);
             return knex.raw(`INSERT INTO booking (duration, totalPrice, service_id, petowner_id, pet_id)
             VALUES ( ${time}, ${totalPrice} ,${service_id}, ${user_id}, ${pet_id});`).then(
-                console.log("Successfully added booking")
             );          
         })
     })
@@ -249,5 +252,6 @@ module.exports = {
     getExperiencedSitters,
     insertBooking,
     getPetInfo,
-    editPetOwner
+    editPetOwner,
+    getPetName
 }
