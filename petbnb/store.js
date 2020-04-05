@@ -98,7 +98,8 @@ const getBookingInformation = ({user_id}) => {
                 FROM service
                 INNER JOIN petSitter ON petSitter.user_id = service.user_id) AS servicesAndSitters ON booking.service_id = servicesAndSitters.service_id
     INNER JOIN (SELECT name AS petName, pet_id FROM pet) AS petNames ON petNames.pet_id = booking.pet_id
-    WHERE user_id = ${user_id};
+    WHERE user_id = ${user_id}
+    ORDER BY booking_id DESC;
     `);
 }
 
