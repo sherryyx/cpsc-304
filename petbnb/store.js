@@ -140,7 +140,7 @@ const getAverageRating = (user_id) => {
 
 // Group average rating by pet sitter
 const groupAverageRatingByPetSitter = (() => {
-    return knex.raw(`SELECT S.user_id, AVG(R.rating)
+    return knex.raw(`SELECT S.user_id, S.name, AVG(R.rating)
     FROM review R, petSitter S
     WHERE R.sitteruser_id = S.user_id
     GROUP BY S.user_id;`)
@@ -178,7 +178,7 @@ const serviceType = (textInput) => {
 }
 
 const getExperiencedSitters = () => {
-    return knex.raw(`SELECT T.user_id FROM petsitter T
+    return knex.raw(`SELECT T.user_id, T.name FROM petsitter T 
     WHERE NOT EXISTS 
     (SELECT R.user_id 
       FROM petowner R
@@ -195,7 +195,7 @@ const sortSearchResults = (project, current_filter) => {
 }
 
 const getSitterRanking = () => {
-    return knex.raw(`SELECT S.user_id, AVG(R.rating)
+    return knex.raw(`SELECT S.user_id, S.name, AVG(R.rating)
     FROM review R, petSitter S
     WHERE R.sitteruser_id = S.user_id
     GROUP BY S.user_id;`);
