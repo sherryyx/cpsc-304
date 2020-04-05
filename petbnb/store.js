@@ -49,7 +49,7 @@ const createPet = ({name, careInstructions, dietInstructions, age, breed, weight
     );`);
 }
 
-const updatePetInfo = ({name, careInstructions, dietInstructions, age, breed, weight}, user_id, pet_id) => {
+const updatePetInfo = ({name, age, breed, weight}, careInstructions, dietInstructions, user_id, pet_id) => {
     return knex.raw(`UPDATE pet SET
     name = '${name}',
     careinstructions = '${careInstructions}',
@@ -185,9 +185,10 @@ const serviceType = (textInput) => {
     WHERE serviceType = '${textInput}';`);
 }
 
+
 const getExperiencedSitters = () => {
     return knex.raw(`SELECT T.user_id, T.name, COUNT(R.rating)
-    FROM petsitter T, review R
+    FROM petSitter T, review R
     WHERE NOT EXISTS 
     (SELECT R.user_id 
       FROM petowner R

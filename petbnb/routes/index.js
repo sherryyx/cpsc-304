@@ -54,7 +54,11 @@ router.get('/pet/:pet_id', function(req, res, next) {
 
 router.post('/pet/:pet_id', function(req, res, next) {
   const pet_id = req.params.pet_id;
-  store.updatePetInfo(req.body, current_user["user_id"], pet_id).then(() => {
+  let careInstructions = req.body.careInstructions;
+  let dietInstructions = req.body.dietInstructions;
+  careInstructions = careInstructions.replace(/\'/g, "''");
+  dietInstructions = dietInstructions.replace(/\'/g, "''");
+  store.updatePetInfo(req.body, careInstructions, dietInstructions, current_user["user_id"], pet_id).then(() => {
     res.redirect('/pets');
   });
 });
