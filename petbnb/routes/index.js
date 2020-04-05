@@ -87,7 +87,7 @@ router.post('/bookService', function(req, res, next) {
     const pet_name = rows[0].name;
     console.log(pet_name);
     res.render('bookService', {service_id : req.body.service_id, pet_name: pet_name,
-      service_type: req.body.servicetype, pet_id: req.body.pet_id, name: req.body.name});
+      service_type: req.body.servicetype, pet_id: req.body.pet_id, name: req.body.name, price_per : req.body.priceper});
   });
 });
 
@@ -154,10 +154,14 @@ router.post('/searchResultsFilter', function(req, res, next) {
       servicetype: "Service type"
     };
     const columns_to_display = columns.map((col) => col_to_display[col]);
-    res.render('searchResultsFilter', {
-      results : rows, 
-      columns_to_display: columns_to_display,
-      columns: columns
+    store.getPetsOfPetOwner(current_user['user_id']).then((pets) => {
+      let myPets = pets.rows;
+      res.render('searchResultsFilter', {
+        results : rows, 
+        columns_to_display: columns_to_display,
+        columns: columns,
+        pets: myPets
+      });
     });
   })
 })

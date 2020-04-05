@@ -25,10 +25,17 @@
                           <td class="mdc-data-table__cell"><%= results[i][columns[c]] %></td>
                         <% } %>
                         <td class="mdc-data-table__cell">
-                          <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="service_id" value = <%= results[i].service_id %>>
-                          <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="priceper" value = <%= results[i].priceper %>>
-                          <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="name" value = <%= results[i].name %>>
-                          <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="servicetype" value = <%= results[i].servicetype %>>
+                          <select id="pet_id" name="pet_id">
+                            <% for (let p of pets)  { %>
+                              <option value="<%= p.pet_id %>"><%= p.name %></option>
+                              <% } %>
+                          </select>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="name" value = "<%= results[i].name %>">
+                            <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="priceper" value = "<%= results[i].priceper %>">
+                            <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="servicetype" value = "<%= results[i].servicetype %>">
+                            <input class="mdc-text-fielsd__input" type="hidden" aria-labelledby="my-label-id" id="pet_id1" name="service_id" value = "<%= results[i].service_id %>">
                           <button class="mdc-button mdc-button--unelevated">
                               <div class="mdc-button__ripple"></div>
                               <span class="mdc-button__label">Book Service</span>
