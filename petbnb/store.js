@@ -199,7 +199,8 @@ const getSitterRanking = () => {
     return knex.raw(`SELECT S.user_id, S.name, AVG(R.rating)
     FROM review R, petSitter S
     WHERE R.sitteruser_id = S.user_id
-    GROUP BY S.user_id;`);
+    GROUP BY S.user_id
+    ORDER BY AVG(R.rating) desc;`);
 }
 
 const insertBooking = (time, service_id, user_id, pet_id) => {

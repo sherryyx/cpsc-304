@@ -408,6 +408,10 @@ a {
   margin: auto;
 }
 
+.ranking-container {
+  margin-top: 24px;
+}
+
 /** Promotional codes **/
 
 .promo-container {
