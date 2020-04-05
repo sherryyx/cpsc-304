@@ -10,6 +10,7 @@ h1 {
   font-weight: 800;
   color: #2d2d2d;
   margin-bottom: 16px;
+  line-height: 120%;
 }
 
 h2 {
@@ -439,4 +440,8 @@ a {
   border-color: rgb(218, 218, 218);
   border-left-color: green;
   border-left-width: 4px;
+}
+
+.promo-container h1 {
+  margin-bottom: 32px;
 }
