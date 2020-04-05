@@ -121,7 +121,7 @@ const createBooking = async (knex, service_id, owner_id, pet_id, pricePer) => {
 
 exports.seed = (knex) => {
   // Deletes ALL existing entries
-  return knex.raw(`DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking; DELETE FROM promoCode;`)
+  return knex.raw(`DELETE FROM promoCode; DELETE FROM applyTo; DELETE FROM redeems; DELETE FROM petOwner; DELETE FROM pet; DELETE FROM petSitter; DELETE FROM service; DELETE FROM review; DELETE FROM booking;`)
     .then(async () => {
       let records = [];
 
